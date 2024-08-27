@@ -17,48 +17,50 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.kal.brawlstatz3.Routes
 import com.kal.brawlstatz3.data.model.BottomNavItem
 
 @Composable
-fun BottomNavigation(modifier: Modifier = Modifier) {
+fun BottomNavigation(currentRoute: String, onNavigate:(Routes)->Unit, modifier: Modifier = Modifier) {
     val bottomNavigationItems = listOf(
         BottomNavItem(
             name = "Brawlers",
-            route = "brawlers",
+            route = Routes.Brawlers,
             icon = Icons.Outlined.Face,
             selectedIcon = Icons.Filled.Face
         ),
         BottomNavItem(
             name = "Events",
-            route = "events",
+            route = Routes.Events,
             icon = Icons.Outlined.Notifications,
             selectedIcon = Icons.Filled.Notifications
         ),
         BottomNavItem(
             name = "Meta",
-            route = "meta",
+            route = Routes.Meta,
             icon = Icons.Outlined.Star,
             selectedIcon = Icons.Filled.Star
         ),
         BottomNavItem(
             name = "Profile",
-            route = "profile",
+            route = Routes.Profile,
             icon = Icons.Outlined.AccountCircle,
             selectedIcon = Icons.Filled.AccountCircle
         )
 
     )
-    val selected = 0
+
     BottomAppBar(
         actions = {
                   bottomNavigationItems.forEachIndexed { index, item ->
+                      val selected = item.route::class.qualifiedName == currentRoute
                       NavigationBarItem(
-                          selected = selected==index,
+                          selected = selected,
                           onClick = {
-
+                              onNavigate(item.route)
                           },
                           icon = {
-                              if(selected==index){
+                              if(selected){
                                   Icon(imageVector = item.selectedIcon, contentDescription = null)
                               }
                               else{

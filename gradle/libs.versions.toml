@@ -1,19 +1,20 @@
 [versions]
 agp = "8.5.2"
 
-hiltAndroidGradlePlugin = "2.51.1"
+hiltAndroidGradlePlugin = "2.52"
 hiltNavigationCompose = "1.2.0"
-kotlin = "1.9.23"
+kotlin = "2.0.0"
 coreKtx = "1.13.1"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
-kotlinxCoroutinesAndroid = "1.7.3"
-kotlinxCoroutinesCore = "1.7.3"
+kotlinxCoroutinesAndroid = "1.8.1"
+kotlinxCoroutinesCore = "1.8.1"
+kotlinxSerializationJson = "1.7.1"
 lifecycleRuntimeKtx = "2.8.4"
 activityCompose = "1.9.1"
 composeBom = "2024.08.00"
-ksp = "1.9.23-1.0.20"
+ksp = "2.0.0-1.0.22"
 
 hilt = "2.49"
 
@@ -29,9 +30,10 @@ firebaseAppcheckPlayintegrity = "18.0.0"
 
 retrofit = "2.11.0"
 converterGson = "2.11.0"
-gson = "2.10.1"
+gson = "2.11.0"
 
 sceneview = "2.2.1"
+composeNavigation = "2.8.0-rc01"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -64,6 +66,7 @@ hilt-compiler = { group = "com.google.dagger",name="hilt-compiler", version.ref 
 
 kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx",name="kotlinx-coroutines-android", version.ref = "kotlinxCoroutinesAndroid" }
 kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx",name="kotlinx-coroutines-core", version.ref = "kotlinxCoroutinesCore" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 
 github-glide = {group="com.github.bumptech.glide", name="compose", version.ref="glide"}
 firebase-appcheck-playintegrity = { group = "com.google.firebase", name = "firebase-appcheck-playintegrity", version.ref = "firebaseAppcheckPlayintegrity" }
@@ -75,10 +78,12 @@ gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 
 sceneview = { module = "io.github.sceneview:sceneview", version.ref = "sceneview" }
 
+navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "composeNavigation" }
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 google-devtools-ksp = { id = "com.google.devtools.ksp", version.ref= "ksp" }
 google-hilt-android = { id = "com.google.dagger.hilt.android", version.ref="hilt"}
 google-gms-google-services = { id = "com.google.gms.google-services", version.ref = "googleGmsGoogleServices" }
-
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }

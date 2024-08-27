@@ -8,14 +8,18 @@ data class Player(
     val challenges: String,
     val club: Club,
     val dp: String,
-    val fame: Fame,
+    val fame: Template,
     val favourite: String,
     val isMasteryDataAvailable: Boolean,
     val name: String,
     val playerTag: String,
-    val progress: List<Progress>,
+    val progress: List<Template>,
     val ranked: Ranked,
-    val stats: List<Stat>,
+    val stats: List<Template>,
     val trophyArray: List<Int>,
-    val winStreak: WinStreak
-)
+    val winStreak: Template
+){
+    constructor():this("", listOf(), listOf(), listOf(),"",Club(),"",Template(),"",false,"","", listOf(),Ranked(),
+        listOf(),
+        listOf(),Template())
+}

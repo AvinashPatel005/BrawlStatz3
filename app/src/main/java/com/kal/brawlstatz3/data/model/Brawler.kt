@@ -15,10 +15,10 @@ data class Brawler(
     val rarity: String,
     val starpowers: List<NameDescription>,
     val tier: String,
-    val trait: String?=null,
+    val trait: String?,
     val type: String,
     val version: Int
 ) {
     constructor(): this("",NameDescription(),NameDescription(),BestBuild(), listOf(), listOf(),0,"","","","","",
-        listOf(),"","","",0)
+        listOf(),"",null,"",0)
 }

@@ -4,44 +4,43 @@ import android.content.ContentValues.TAG
 import android.util.Log
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.toObject
+import com.kal.brawlstatz3.util.Response
 import com.kal.brawlstatz3.data.model.Brawler
-import com.kal.brawlstatz3.util.UiState
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.channels.ReceiveChannel
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
+import javax.inject.Named
 
 class BrawlerRepositoryImpl @Inject constructor(
-    private val brawlerReference: CollectionReference,
+    @Named("Brawlers") private val brawlerReference: CollectionReference,
+    @Named("Others") private val othersReference: CollectionReference
 ):BrawlerRepository {
-    @OptIn(DelicateCoroutinesApi::class)
-    override fun getBrawlerList(uiState: Channel<UiState>) {
-        GlobalScope.launch {
-            uiState.send(UiState.Loading)
-        }
-        brawlerReference.orderBy("name").addSnapshotListener { value, e ->
-            if (e != null) {
-                GlobalScope.launch {
-                    uiState.send(UiState.Error(e.message.toString()))
-                }
-                return@addSnapshotListener
-            }
-
+    override fun getBrawlerList()= callbackFlow {
+        trySend(Response.Loading)
+        var snapshotListener = brawlerReference.orderBy("name").addSnapshotListener { value,e ->
             val brawlers = ArrayList<Brawler>()
             val brawlersMap = hashMapOf<Int,Brawler>()
-            for (doc in value!!) {
-                val brawler = doc.toObject<Brawler>()
-                brawlersMap.put(brawler.id,brawler)
-                brawlers.add(brawler)
+            var response = if(value!=null){
+                for (doc in value) {
+                    val brawler = doc.toObject<Brawler>()
+                    brawlersMap.put(brawler.id,brawler)
+                    brawlers.add(brawler)
+                }
+                Response.Success(brawlersMap)
             }
-
-            GlobalScope.launch {
-                uiState.send(UiState.Success(brawlers,brawlersMap))
+            else{
+                Response.Failure(e)
             }
-
+            trySend(response)
         }
+        awaitClose {
+            snapshotListener.remove()
+        }
+    }
 
+    override suspend fun getTraitList(): MutableMap<String, Any>? {
+        val res =  othersReference.document("traits").get().await()
+        return res.data
     }
 }

@@ -4,19 +4,28 @@ plugins {
     alias(libs.plugins.google.devtools.ksp)
     alias(libs.plugins.google.hilt.android)
     alias(libs.plugins.google.gms.google.services)
-
+    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
+    signingConfigs {
+        create("release") {
+            storeFile = file("C:\\Users\\awina\\OneDrive\\Documents\\Android Studio\\key.jks")
+            storePassword = "ak47.0440"
+            keyPassword = "ak47.0440"
+            keyAlias = "key0"
+        }
+    }
     namespace = "com.kal.brawlstatz3"
     compileSdk = 34
 
     defaultConfig {
         applicationId = "com.kal.brawlstatz3"
         minSdk = 24
-        targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        targetSdk = 35
+        versionCode = 2
+        versionName = "0.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -31,6 +40,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("release")
         }
     }
     compileOptions {
@@ -78,6 +88,8 @@ dependencies {
     implementation (libs.hilt.android)
     ksp(libs.hilt.compiler)
 
+    implementation(libs.kotlinx.serialization.json)
+
     implementation(libs.androidx.hilt.navigation.compose)
 
     implementation (libs.androidx.core.splashscreen)
@@ -92,4 +104,7 @@ dependencies {
     implementation(libs.gson)
 
     implementation(libs.sceneview)
+
+    implementation(libs.navigation.compose)
+    implementation(libs.kotlinx.serialization.json)
 }

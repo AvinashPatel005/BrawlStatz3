@@ -1,6 +1,9 @@
 package com.kal.brawlstatz3.data.model.player
 
 data class Ranked(
-    val current: Current,
-    val highest: Highest
+    val current: Template,
+    val highest: Template
 )
+{
+    constructor():this(Template(),Template())
+}

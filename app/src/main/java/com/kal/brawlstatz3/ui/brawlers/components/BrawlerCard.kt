@@ -8,16 +8,20 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
@@ -40,92 +44,75 @@ import com.kal.brawlstatz3.data.model.Brawler
 import com.kal.brawlstatz3.util.FirebaseStorageUtil
 import com.kal.brawlstatz3.util.getRarityColor
 
-
-@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun BrawlerCard(
     brawler: Brawler,
-    isExpanded: Boolean,
     traitText:String,
-    counterList: List<Brawler>,
+    isExpanded: Boolean,
     onClick:()->Unit,
     modifier: Modifier = Modifier,
 ) {
-    Card(onClick = {
-        onClick()
-    }, border = BorderStroke(2.dp, getRarityColor(brawler.rarity)), modifier = modifier
-        .padding(8.dp, 2.dp)
-        .animateContentSize()
+    Card(onClick={onClick()}, border = BorderStroke(2.dp, getRarityColor(brawler.rarity)), modifier = modifier
         .fillMaxWidth()
+        .padding(8.dp, 2.dp)
+        .animateContentSize().clickable { onClick() }
+
     ) {
-        Column{
-            Row(horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-                ,modifier = Modifier
-                    .padding(6.dp)
-                    .fillMaxWidth()
-                    .height(if (isExpanded) 120.dp else 90.dp)
-            ) {
-                Row{
-                    OutlinedGlideImage(size = if(isExpanded) 120.dp else 90.dp, url = FirebaseStorageUtil().getBrawlerProfileURL(brawler.id), placeholder = R.drawable.placeholder1,strokeWidth = 2.dp, strokeColor = Color.Black, radius = 10.dp )
-                    Column(Modifier.padding(8.dp)) {
-                        Text(text = brawler.name, fontSize = 20.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onBackground, modifier = Modifier.fillMaxWidth(0.5f))
-                        Text(text = brawler.rarity , fontSize = 14.sp, fontWeight = FontWeight.Bold, fontStyle = FontStyle.Italic, color = getRarityColor(brawler.rarity))
-                        if(brawler.trait!=null){
-                            Spacer(modifier = Modifier.height(4.dp))
-                            TraitBox(traitURL = FirebaseStorageUtil().getTraitURL(brawler.trait), traitText = traitText, isExpanded = isExpanded)
-                        }
+//        Row(modifier = Modifier.height(100.dp)) {
+//                                        Text(text = "FPS")
+//                                    }
+//                                    if(isExpanded){
+//                                        Row(modifier = Modifier.height(100.dp)) {
+//                                            Text(text = "SPS")
+//                                        }
+//                                    }
 
-                    }
+        Row(horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+            ,modifier = Modifier
+                .padding(6.dp)
+                .fillMaxWidth()
+                .height(if (isExpanded) 100.dp else 80.dp)
+        ) {
+            OutlinedGlideImage(size = if(isExpanded) 100.dp else 80.dp, url = FirebaseStorageUtil().getBrawlerProfileURL(brawler.id), placeholder = R.drawable.placeholder1,strokeWidth = 2.dp, strokeColor = Color.Black, radius = 10.dp )
+            Column(modifier =
+            Modifier
+                .padding(horizontal = 8.dp, vertical = 4.dp)
+                .weight(1f)) {
+                Text(text = brawler.name, fontSize = 20.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onBackground)
+                Text(text = brawler.rarity , fontSize = 14.sp, fontWeight = FontWeight.Bold, fontStyle = FontStyle.Italic, color = getRarityColor(brawler.rarity))
+                if(brawler.trait!=null){
+                    TraitBox(traitURL = FirebaseStorageUtil().getTraitURL(brawler.trait), traitText = traitText, isExpanded = isExpanded)
                 }
-                val rotation by animateFloatAsState(targetValue = if (isExpanded) 0f else 1f,
-                    label = "rotation"
-                )
-                val offset by animateFloatAsState(targetValue = if(isExpanded) 0f else 1f, animationSpec = tween(100),
-                    label = "offset"
-                )
-                val size = animateDpAsState(targetValue = if (isExpanded) 26.dp else 30.dp, label = "size")
-                Column(horizontalAlignment = Alignment.End){
 
-                    AnimatedVisibility(visible = isExpanded) {
-                        Text(text = "COUNTERS", fontSize = 14.sp, fontStyle = FontStyle.Italic, fontWeight = FontWeight.SemiBold ,lineHeight = 14.sp)
-                    }
-                    Box(
-                        Modifier
-                            .fillMaxHeight(0.75f),
-                    ){
-                        counterList.forEachIndexed{index,counterBrawler->
-                            TextImage(
-                                name = counterBrawler.name,
-                                profile = FirebaseStorageUtil().getNeutralPin(counterBrawler.id),
-                                size=size.value,
-                                nameVisibility = isExpanded ,
-                                offsetX = counterAdvanceImageList[index].offsetX*offset ,
-                                rotation = counterAdvanceImageList[index].rotation * rotation,
-                                alignment = counterAdvanceImageList[index].alignment
-                            )
+            }
+            if (brawler.counters[0]!=0){
+                Column(horizontalAlignment = Alignment.CenterHorizontally){
+                    Text(text = "COUNTERS", fontSize = 12.sp)
+                    Row{
+                        brawler.counters.forEach { pin ->
+
+                            PinBox(pinURL = FirebaseStorageUtil().getNeutralPin(pin), backgroundColor = Color.White)
+
                         }
                     }
                 }
             }
-            if(isExpanded){
-                Column(
+        }
+        if(isExpanded){
+            Column(
+                Modifier
+                    .height(200.dp)
+                    .padding(horizontal = 6.dp)) {
+                Box(
                     Modifier
-                        .height(200.dp)
-                        .padding(horizontal = 6.dp)) {
-                    Box(
-                        Modifier
-                            .border(
-                                2.dp,
-                                MaterialTheme.colorScheme.onBackground,
-                                RoundedCornerShape(10.dp)
-                            )
-                            .padding(horizontal = 4.dp, vertical = 2.dp)){
-                        Text(text = brawler.about, textAlign = TextAlign.Center , lineHeight =12.sp , fontStyle = FontStyle.Italic ,fontSize = 13.sp)
-                    }
-
-
-
+                        .border(
+                            2.dp,
+                            MaterialTheme.colorScheme.onBackground,
+                            RoundedCornerShape(10.dp)
+                        )
+                        .padding(horizontal = 4.dp, vertical = 2.dp)){
+                    Text(text = brawler.about, textAlign = TextAlign.Center , lineHeight =12.sp , fontStyle = FontStyle.Italic ,fontSize = 13.sp)
                 }
             }
 

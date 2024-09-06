@@ -1,6 +1,7 @@
 [versions]
 agp = "8.5.2"
 
+firebaseAppcheck = "18.0.0"
 hiltAndroidGradlePlugin = "2.52"
 hiltNavigationCompose = "1.2.0"
 kotlin = "2.0.0"
@@ -11,9 +12,9 @@ espressoCore = "3.6.1"
 kotlinxCoroutinesAndroid = "1.8.1"
 kotlinxCoroutinesCore = "1.8.1"
 kotlinxSerializationJson = "1.7.1"
-lifecycleRuntimeKtx = "2.8.4"
-activityCompose = "1.9.1"
-composeBom = "2024.08.00"
+lifecycleRuntimeKtx = "2.8.5"
+activityCompose = "1.9.2"
+composeBom = "2024.08.00" #Ripple Bug in "2024.09.00"
 ksp = "2.0.0-1.0.22"
 
 hilt = "2.49"
@@ -23,22 +24,25 @@ glide = "1.0.0-beta01"
 coreSplashscreenVersion = "1.0.1"
 
 googleGmsGoogleServices = "4.4.2"
-firebaseFirestore = "25.1.0"
-firebaseMessaging = "24.0.1"
-firebaseStorage = "21.0.0"
-firebaseAppcheckPlayintegrity = "18.0.0"
+firebaseStorageKtx = "21.0.0"
+firebaseFirestoreKtx = "25.1.0"
+firebaseMessagingKtx = "24.0.1"
+
 
 retrofit = "2.11.0"
 converterGson = "2.11.0"
 gson = "2.11.0"
 
 sceneview = "2.2.1"
-composeNavigation = "2.8.0-rc01"
+
+composeNavigation = "2.8.0"
+
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleRuntimeKtx" }
 
+firebase-appcheck = { module = "com.google.firebase:firebase-appcheck", version.ref = "firebaseAppcheck" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -53,9 +57,7 @@ androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-man
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 
-firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
-firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging", version.ref = "firebaseMessaging" }
-firebase-storage = { group = "com.google.firebase", name = "firebase-storage", version.ref = "firebaseStorage" }
+
 
 androidx-core-splashscreen = { group = "androidx.core",name = "core-splashscreen", version.ref = "coreSplashscreenVersion" }
 
@@ -69,7 +71,6 @@ kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx",name="kotlinx-corout
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 
 github-glide = {group="com.github.bumptech.glide", name="compose", version.ref="glide"}
-firebase-appcheck-playintegrity = { group = "com.google.firebase", name = "firebase-appcheck-playintegrity", version.ref = "firebaseAppcheckPlayintegrity" }
 
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
@@ -79,6 +80,12 @@ gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 sceneview = { module = "io.github.sceneview:sceneview", version.ref = "sceneview" }
 
 navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "composeNavigation" }
+
+firebase-storage-ktx = { group = "com.google.firebase", name = "firebase-storage-ktx", version.ref = "firebaseStorageKtx" }
+firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFirestoreKtx" }
+firebase-messaging-ktx = { group = "com.google.firebase", name = "firebase-messaging-ktx", version.ref = "firebaseMessagingKtx" }
+
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }

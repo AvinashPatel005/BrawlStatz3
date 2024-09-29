@@ -1,5 +1,8 @@
 package com.kal.brawlstatz3.data.model.player
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class Player(
     val accountCreated: String,
     val battleCard: List<String>,

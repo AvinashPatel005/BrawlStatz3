@@ -24,8 +24,8 @@ android {
         applicationId = "com.kal.brawlstatz3"
         minSdk = 24
         targetSdk = 35
-        versionCode = 3
-        versionName = "0.15"
+        versionCode = 4
+        versionName = "0.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -99,10 +99,6 @@ dependencies {
 
     implementation (libs.github.glide)
 
-    implementation(libs.retrofit)
-    implementation(libs.converter.gson)
-    implementation(libs.converter.scalars)
-    implementation(libs.gson)
 
     implementation(libs.sceneview)
 
@@ -110,4 +106,10 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
 
     implementation(libs.firebase.appcheck)
+
+    implementation(libs.ktor.client.core)
+    implementation(libs.ktor.client.okhttp)
+    implementation(libs.ktor.client.content.negotiation)
+    implementation(libs.ktor.serialization.kotlinx.json)
+
 }

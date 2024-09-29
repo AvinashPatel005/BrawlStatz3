@@ -53,7 +53,7 @@ fun TraitBox(traitURL:String,traitText: String,isExpanded:Boolean) {
         Spacer(modifier = Modifier.width(2.dp))
         if(isExpanded){
             Text(text = traitText, color = MaterialTheme.colorScheme.inverseOnSurface, fontWeight = FontWeight.Bold, fontSize = 10.sp, lineHeight = 10.sp,modifier = Modifier.clip(
-                RoundedCornerShape(8.dp)).background(Color.White).defaultMinSize(minHeight = 20.dp).wrapContentHeight(align = Alignment.CenterVertically))
+                RoundedCornerShape(8.dp)).defaultMinSize(minHeight = 20.dp).wrapContentHeight(align = Alignment.CenterVertically))
         }
     }
 }

@@ -1,5 +1,4 @@
 package com.kal.brawlstatz3.ui.main
-
 import android.content.ContentValues.TAG
 import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
@@ -11,19 +10,24 @@ import com.kal.brawlstatz3.util.Response
 import com.kal.brawlstatz3.data.model.Brawler
 import com.kal.brawlstatz3.data.model.club.Club
 import com.kal.brawlstatz3.data.model.event.Active
+import com.kal.brawlstatz3.data.model.event.Event
 import com.kal.brawlstatz3.data.model.player.Player
-import com.kal.brawlstatz3.data.repository.BrawlAPI
 import com.kal.brawlstatz3.data.repository.BrawlerRepository
-import com.kal.brawlstatz3.data.repository.MyBrawlAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.ktor.client.HttpClient
+import io.ktor.client.call.body
+import io.ktor.client.engine.okhttp.OkHttp
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.request.get
+import io.ktor.serialization.kotlinx.json.json
 import kotlinx.coroutines.launch
+import kotlinx.serialization.json.Json
 import javax.inject.Inject
 
 @HiltViewModel
 class ViewModel @Inject constructor(
     private val repository: BrawlerRepository,
-    private val myBrawlAPI: MyBrawlAPI,
-    private val brawlAPI: BrawlAPI
+    private val ktorClient: HttpClient
 ) :ViewModel() {
     var isLoading = mutableStateOf(false)
     var errorLog = mutableStateOf("")
@@ -43,8 +47,14 @@ class ViewModel @Inject constructor(
     init {
         getTraits()
         getBrawlerList()
-//        getProfileAndClub()
-        getEvents()
+
+        viewModelScope.launch {
+            getEvents()
+        }
+        viewModelScope.launch {
+            getProfile()
+            getClub()
+        }
     }
 
     private fun getBrawlerList() = viewModelScope.launch {
@@ -68,23 +78,27 @@ class ViewModel @Inject constructor(
             }
         }
     }
-    private fun getProfileAndClub() = viewModelScope.launch {
-        val profileRes = myBrawlAPI.getProfile("LRGJVL9U").body()
-        if (profileRes != null) {
-            profile.value = profileRes
-        }
+    suspend fun getProfile() {
 
-        val clubRes = myBrawlAPI.getClub(profile.value.club.link).body()
-        if (clubRes != null) {
-            club.value = clubRes
+        try {
+            profile.value = ktorClient.get("https://zs74ow3jyxjfktc5cti6uzysfu0zjjpa.lambda-url.ap-south-1.on.aws/?tag=lrgjvl9u").body<Player>()
+        } catch (e: Exception) {
+            // handle exception
         }
     }
-    private fun getEvents() = viewModelScope.launch {
-        val res = brawlAPI.getEvent().body()
-        if (res != null) {
-            filterEvents(upcomingMaps,res.upcoming)
-            filterEvents(currentMaps,res.active)
+    suspend fun getClub() {
+        try {
+            club.value = ktorClient.get("https://clh6sjyjijbqnxeoxtvxiz2s7a0zncjc.lambda-url.ap-south-1.on.aws/?tag=${profile.value.club.link}").body<Club>()
+        } catch (e: Exception) {
+            // handle exception
         }
+    }
+
+
+    suspend fun getEvents() = viewModelScope.launch {
+        val res:Event = ktorClient.get("https://api.brawlify.com/v1/events").body<Event>()
+        filterEvents(upcomingMaps,res.upcoming)
+        filterEvents(currentMaps,res.active)
     }
 
     private fun getTraits() = viewModelScope.launch {

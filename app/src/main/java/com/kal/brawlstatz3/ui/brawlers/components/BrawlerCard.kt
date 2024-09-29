@@ -91,9 +91,7 @@ fun BrawlerCard(
                     Text(text = "COUNTERS", fontSize = 12.sp)
                     Row{
                         brawler.counters.forEach { pin ->
-
                             PinBox(pinURL = FirebaseStorageUtil().getNeutralPin(pin), backgroundColor = Color.White)
-
                         }
                     }
                 }
@@ -105,7 +103,7 @@ fun BrawlerCard(
                     .height(200.dp)
                     .padding(horizontal = 6.dp)) {
                 Box(
-                    Modifier
+                    Modifier.fillMaxWidth()
                         .border(
                             2.dp,
                             MaterialTheme.colorScheme.onBackground,

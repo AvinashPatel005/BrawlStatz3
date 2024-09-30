@@ -17,8 +17,8 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.kal.brawlstatz3.Routes
 import com.kal.brawlstatz3.data.model.BottomNavItem
+import com.kal.brawlstatz3.util.Routes
 
 @Composable
 fun BottomNavigation(currentRoute: String, onNavigate:(Routes)->Unit, modifier: Modifier = Modifier) {
@@ -52,7 +52,7 @@ fun BottomNavigation(currentRoute: String, onNavigate:(Routes)->Unit, modifier: 
 
     BottomAppBar(
         actions = {
-                  bottomNavigationItems.forEachIndexed { index, item ->
+                  bottomNavigationItems.forEach {item ->
                       val selected = item.route::class.qualifiedName == currentRoute
                       NavigationBarItem(
                           selected = selected,

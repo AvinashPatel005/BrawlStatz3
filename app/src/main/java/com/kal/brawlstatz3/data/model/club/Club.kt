@@ -10,7 +10,7 @@ data class Club(
     val name: String,
     val president: String,
     val status: String,
-    val totalTrophy: Int
+    val totalTrophy: String
 ){
-    constructor():this("","", listOf(),"","","",0)
+    constructor():this("","", listOf(),"","","","0")
 }

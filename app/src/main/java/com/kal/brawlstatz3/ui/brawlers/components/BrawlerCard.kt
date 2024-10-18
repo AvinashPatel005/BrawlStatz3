@@ -103,14 +103,14 @@ fun BrawlerCard(
                     .height(200.dp)
                     .padding(horizontal = 6.dp)) {
                 Box(
-                    Modifier
+                    Modifier.fillMaxWidth()
                         .border(
                             2.dp,
                             MaterialTheme.colorScheme.onBackground,
                             RoundedCornerShape(10.dp)
                         )
                         .padding(horizontal = 4.dp, vertical = 2.dp)){
-                    Text(text = brawler.about, textAlign = TextAlign.Center , lineHeight =12.sp , fontStyle = FontStyle.Italic ,fontSize = 13.sp, modifier = Modifier.fillMaxWidth())
+                    Text(text = brawler.about, textAlign = TextAlign.Center , lineHeight =12.sp , fontStyle = FontStyle.Italic ,fontSize = 13.sp)
                 }
             }
 

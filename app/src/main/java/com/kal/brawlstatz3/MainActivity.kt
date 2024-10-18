@@ -25,7 +25,6 @@ import com.kal.brawlstatz3.ui.brawlers.BrawlersScreen
 import com.kal.brawlstatz3.ui.main.BottomNavigation
 import com.kal.brawlstatz3.ui.main.ViewModel
 import com.kal.brawlstatz3.ui.theme.BrawlStatZTheme
-import com.kal.brawlstatz3.util.Routes
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.serialization.Serializable
 
@@ -87,6 +86,18 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+sealed class Routes{
+    @Serializable
+    data object Brawlers:Routes()
 
+    @Serializable
+    data object Meta:Routes()
+
+    @Serializable
+    data object Profile:Routes()
+
+    @Serializable
+    data object Events:Routes()
+}
 
 

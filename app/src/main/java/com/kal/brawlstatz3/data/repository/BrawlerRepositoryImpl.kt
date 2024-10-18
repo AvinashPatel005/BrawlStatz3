@@ -16,7 +16,7 @@ class BrawlerRepositoryImpl @Inject constructor(
     @Named("Brawlers") private val brawlerReference: CollectionReference,
     @Named("Others") private val othersReference: CollectionReference
 ):BrawlerRepository {
-    override fun getBrawlerList() = callbackFlow {
+    override fun getBrawlerList()= callbackFlow {
         trySend(Response.Loading)
         var snapshotListener = brawlerReference.orderBy("name").addSnapshotListener { value,e ->
             val brawlers = ArrayList<Brawler>()
@@ -39,8 +39,8 @@ class BrawlerRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getTraitList(): Response<MutableMap<String, Any>?> {
+    override suspend fun getTraitList(): MutableMap<String, Any>? {
         val res =  othersReference.document("traits").get().await()
-        return Response.Success(res.data)
+        return res.data
     }
 }

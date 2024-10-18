@@ -6,5 +6,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface BrawlerRepository {
     fun getBrawlerList(): Flow<Response<Map<Int,Brawler>>>
-    suspend fun getTraitList():Response<MutableMap<String, Any>?>
+    suspend fun getTraitList():MutableMap<String, Any>?
 }

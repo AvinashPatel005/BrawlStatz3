@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Club(
-    val tag: String,
+    val link: String,
     val name: String
 ){
     constructor():this("","")

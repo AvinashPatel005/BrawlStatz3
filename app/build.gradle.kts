@@ -106,10 +106,8 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
 
     implementation(libs.firebase.appcheck)
+    implementation(libs.retrofit2.retrofit)
+    implementation(libs.retrofit2.converter.gson)
 
-    implementation(libs.ktor.client.core)
-    implementation(libs.ktor.client.okhttp)
-    implementation(libs.ktor.client.content.negotiation)
-    implementation(libs.ktor.serialization.kotlinx.json)
 
 }

@@ -1,6 +1,4 @@
 package com.kal.brawlstatz3.ui.main
-import android.content.ContentValues.TAG
-import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
@@ -10,20 +8,11 @@ import com.kal.brawlstatz3.util.Response
 import com.kal.brawlstatz3.data.model.Brawler
 import com.kal.brawlstatz3.data.model.club.Club
 import com.kal.brawlstatz3.data.model.event.Active
-import com.kal.brawlstatz3.data.model.event.Event
 import com.kal.brawlstatz3.data.model.player.Player
 import com.kal.brawlstatz3.data.repository.BrawlApiRepository
 import com.kal.brawlstatz3.data.repository.BrawlerRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.ktor.client.HttpClient
-import io.ktor.client.call.body
-import io.ktor.client.engine.okhttp.OkHttp
-import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
-import io.ktor.client.request.get
-import io.ktor.serialization.kotlinx.json.json
 import kotlinx.coroutines.launch
-import kotlinx.serialization.json.Json
-import okhttp3.internal.wait
 import javax.inject.Inject
 
 @HiltViewModel

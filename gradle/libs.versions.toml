@@ -14,7 +14,7 @@ kotlinxCoroutinesCore = "1.8.1"
 kotlinxSerializationJson = "1.7.1"
 
 lifecycleRuntimeKtx = "2.8.6"
-activityCompose = "1.9.2"
+activityCompose = "1.9.3"
 composeBom = "2024.08.00" #Ripple Bug in "2024.09.00"
 ksp = "2.0.0-1.0.22"
 
@@ -29,10 +29,9 @@ firebaseStorageKtx = "21.0.1"
 firebaseFirestoreKtx = "25.1.0"
 firebaseMessagingKtx = "24.0.2"
 
-retrofit = "2.11.0"
 sceneview = "2.2.1"
 
-composeNavigation = "2.8.2"
+composeNavigation = "2.8.3"
 
 ktor = "2.3.12"
 
@@ -73,6 +72,7 @@ github-glide = {group="com.github.bumptech.glide", name="compose", version.ref="
 
 
 
+
 sceneview = { module = "io.github.sceneview:sceneview", version.ref = "sceneview" }
 
 navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "composeNavigation" }
@@ -82,8 +82,11 @@ firebase-storage-ktx = { group = "com.google.firebase", name = "firebase-storage
 firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFirestoreKtx" }
 firebase-messaging-ktx = { group = "com.google.firebase", name = "firebase-messaging-ktx", version.ref = "firebaseMessagingKtx" }
 
-retrofit2-converter-gson = {group="com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
-retrofit2-retrofit = {group="com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
+ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
+ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

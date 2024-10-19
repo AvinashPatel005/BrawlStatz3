@@ -24,8 +24,8 @@ android {
         applicationId = "com.kal.brawlstatz3"
         minSdk = 24
         targetSdk = 35
-        versionCode = 4
-        versionName = "0.2"
+        versionCode = 6
+        versionName = "0.24"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -106,8 +106,11 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
 
     implementation(libs.firebase.appcheck)
-    implementation(libs.retrofit2.retrofit)
-    implementation(libs.retrofit2.converter.gson)
 
+    implementation(libs.ktor.client.core)
+    implementation(libs.ktor.client.okhttp)
+    implementation(libs.ktor.client.content.negotiation)
+    implementation(libs.ktor.serialization.kotlinx.json)
+    implementation(libs.ktor.client.logging)
 
 }

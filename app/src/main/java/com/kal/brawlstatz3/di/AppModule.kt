@@ -5,6 +5,8 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.kal.brawlstatz3.data.repository.BrawlerRepository
 import com.kal.brawlstatz3.data.repository.BrawlerRepositoryImpl
+import com.kal.brawlstatz3.data.repository.MyBrawlRepository
+import com.kal.brawlstatz3.data.repository.MyBrawlRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -12,7 +14,11 @@ import dagger.hilt.components.SingletonComponent
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.plugins.logging.DEFAULT
+import io.ktor.client.plugins.logging.LogLevel
+import io.ktor.client.plugins.logging.Logging
 import io.ktor.serialization.kotlinx.json.json
+import io.ktor.client.plugins.logging.Logger
 import kotlinx.serialization.json.Json
 import javax.inject.Named
 import javax.inject.Singleton
@@ -52,5 +58,14 @@ class AppModule {
                 }
             )
         }
+        install(Logging){
+            logger = Logger.DEFAULT
+            level = LogLevel.ALL
+        }
+    }
+    @Provides
+    @Singleton
+    fun provideMyBrawlRepository(ktorClient: HttpClient): MyBrawlRepository {
+        return MyBrawlRepositoryImpl(ktorClient)
     }
 }

@@ -39,8 +39,13 @@ class BrawlerRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getTraitList(): MutableMap<String, Any>? {
-        val res =  othersReference.document("traits").get().await()
-        return res.data
+    override suspend fun getTraitList(): Response<MutableMap<String, Any>?> {
+        try {
+            val res =  othersReference.document("traits").get().await()
+            return Response.Success(res.data)
+        }
+        catch (e:Exception){
+            return Response.Failure(e=e)
+        }
     }
 }

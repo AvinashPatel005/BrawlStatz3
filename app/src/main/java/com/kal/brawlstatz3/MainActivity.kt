@@ -19,12 +19,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.kal.brawlstatz3.ui.components.TopBar
 import com.kal.brawlstatz3.feature.brawlers.ui.BrawlersScreen
 import com.kal.brawlstatz3.feature.brawlers.viewmodel.BrawlersViewModel
 import com.kal.brawlstatz3.feature.events.viewmodel.EventsViewModel
 import com.kal.brawlstatz3.feature.profile.viewmodel.ProfileViewModel
 import com.kal.brawlstatz3.ui.components.BottomBar
+import com.kal.brawlstatz3.ui.components.TopBar
 import com.kal.brawlstatz3.ui.theme.BrawlStatZTheme
 import com.kal.brawlstatz3.util.Screen
 import dagger.hilt.android.AndroidEntryPoint

@@ -1,9 +1,9 @@
 package com.kal.brawlstatz3.data.remote
 
-import com.kal.brawlstatz3.util.Response
 import com.kal.brawlstatz3.data.model.club.Club
 import com.kal.brawlstatz3.data.model.event.Event
 import com.kal.brawlstatz3.data.model.player.Player
+import com.kal.brawlstatz3.util.Response
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get

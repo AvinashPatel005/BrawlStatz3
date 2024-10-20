@@ -2,8 +2,8 @@ package com.kal.brawlstatz3.data.remote
 
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.toObject
-import com.kal.brawlstatz3.util.Response
 import com.kal.brawlstatz3.data.model.brawler.Brawler
+import com.kal.brawlstatz3.util.Response
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await

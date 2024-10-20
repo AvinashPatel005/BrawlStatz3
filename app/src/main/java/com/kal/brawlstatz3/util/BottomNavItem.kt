@@ -1,7 +1,6 @@
-package com.kal.brawlstatz3.data.model
+package com.kal.brawlstatz3.util
 
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.kal.brawlstatz3.util.Screen
 
 data class BottomNavItem(
     val name: String,

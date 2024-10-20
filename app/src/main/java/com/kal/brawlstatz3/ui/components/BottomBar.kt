@@ -17,7 +17,7 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.kal.brawlstatz3.data.model.BottomNavItem
+import com.kal.brawlstatz3.util.BottomNavItem
 import com.kal.brawlstatz3.util.Screen
 
 @Composable

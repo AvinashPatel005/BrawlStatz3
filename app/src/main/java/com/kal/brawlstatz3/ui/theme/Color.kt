@@ -10,7 +10,6 @@ val Purple40 = Color(0xFF6650a4)
 val PurpleGrey40 = Color(0xFF625b71)
 val Pink40 = Color(0xFF7D5260)
 
-val chromatic = Color(0xFFf3902d)
 val legendary = Color(0xFFedca40)
 val mythic = Color(0xFFf33f41)
 val epic = Color(0xFFa91edd)

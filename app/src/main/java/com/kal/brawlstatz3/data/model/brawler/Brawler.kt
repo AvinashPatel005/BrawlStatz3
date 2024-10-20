@@ -1,4 +1,4 @@
-package com.kal.brawlstatz3.data.model
+package com.kal.brawlstatz3.data.model.brawler
 
 data class Brawler(
     val about: String,
@@ -19,6 +19,9 @@ data class Brawler(
     val type: String,
     val version: Int
 ) {
-    constructor(): this("",NameDescription(),NameDescription(),BestBuild(), listOf(), listOf(),0,"","","","","",
+    constructor(): this("",
+        NameDescription(),
+        NameDescription(),
+        BestBuild(), listOf(), listOf(),0,"","","","","",
         listOf(),"",null,"",0)
 }

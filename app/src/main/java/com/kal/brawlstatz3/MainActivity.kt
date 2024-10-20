@@ -1,19 +1,17 @@
 package com.kal.brawlstatz3
 
-import android.content.ContentValues.TAG
-import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -21,13 +19,15 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.kal.brawlstatz3.ui.main.TopBar
-import com.kal.brawlstatz3.ui.brawlers.BrawlersScreen
-import com.kal.brawlstatz3.ui.main.BottomNavigation
-import com.kal.brawlstatz3.ui.main.ViewModel
+import com.kal.brawlstatz3.ui.components.TopBar
+import com.kal.brawlstatz3.feature.brawlers.ui.BrawlersScreen
+import com.kal.brawlstatz3.feature.brawlers.viewmodel.BrawlersViewModel
+import com.kal.brawlstatz3.feature.events.viewmodel.EventsViewModel
+import com.kal.brawlstatz3.feature.profile.viewmodel.ProfileViewModel
+import com.kal.brawlstatz3.ui.components.BottomBar
 import com.kal.brawlstatz3.ui.theme.BrawlStatZTheme
+import com.kal.brawlstatz3.util.Screen
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.serialization.Serializable
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -36,19 +36,21 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             BrawlStatZTheme {
-                val viewModel = hiltViewModel<ViewModel>()
+                val brawlerViewModel = hiltViewModel<BrawlersViewModel>()
+                val profileViewModel = hiltViewModel<ProfileViewModel>()
+                val eventsViewModel = hiltViewModel<EventsViewModel>()
                 val navController = rememberNavController()
 
                 //Get Current Route
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
-                val currentRoute = navBackStackEntry?.destination?.route ?: Routes.Brawlers::class.qualifiedName.orEmpty()
+                val currentRoute = navBackStackEntry?.destination?.route ?: Screen.Brawlers::class.qualifiedName.orEmpty()
 
                 Scaffold(
                     topBar = {
                         TopBar()
                     },
                     bottomBar = {
-                        BottomNavigation(
+                        BottomBar(
                             currentRoute = currentRoute,
                             onNavigate = { route->
                             navController.navigate(route)
@@ -58,31 +60,48 @@ class MainActivity : ComponentActivity() {
                         .fillMaxSize()
 
                 ) { innerPadding ->
-                    NavHost(navController = navController, startDestination = Routes.Brawlers, modifier = Modifier.padding(innerPadding)) {
-                        composable<Routes.Brawlers>{
+                    NavHost(navController = navController, startDestination = Screen.Brawlers, modifier = Modifier.padding(innerPadding)) {
+                        composable<Screen.Brawlers>{
                             Column() {
-                                if(viewModel.isLoading.value){
-                                    Text(text = "Loading...")
+                                if(brawlerViewModel.isLoading.value){
+                                    CircularProgressIndicator()
 
                                 }
                                 else {
-                                    BrawlersScreen()
+                                    BrawlersScreen(brawlersViewModel = brawlerViewModel)
                                 }
                             }
 
                         }
-                        composable<Routes.Events> {
-                            Text(text = viewModel.currentMaps.toString())
-                        }
-                        composable<Routes.Meta> {
-                            Text(text = viewModel.club.value.toString())
-                        }
-                        composable<Routes.Profile> {
-                            LazyColumn {
-                                item{
-                                    Text(text = viewModel.profile.value.toString())
-                                }
+                        composable<Screen.Events> {
+                            if(eventsViewModel.isLoading.value){
+                                CircularProgressIndicator()
+
                             }
+                            else {
+                                Events(eventsViewModel = eventsViewModel)
+                            }
+
+                        }
+                        composable<Screen.Meta> {
+                            if(profileViewModel.isLoading.value){
+                                CircularProgressIndicator()
+
+                            }
+                            else {
+                                Meta(profileViewModel = profileViewModel)
+                            }
+
+                        }
+                        composable<Screen.Profile> {
+                            if(profileViewModel.isLoading.value){
+                                CircularProgressIndicator()
+
+                            }
+                            else {
+                                Profile(profileViewModel = profileViewModel)
+                            }
+
                         }
                     }
                 }
@@ -91,18 +110,25 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-sealed class Routes{
-    @Serializable
-    data object Brawlers:Routes()
-
-    @Serializable
-    data object Meta:Routes()
-
-    @Serializable
-    data object Profile:Routes()
-
-    @Serializable
-    data object Events:Routes()
+@Composable
+fun Events(modifier: Modifier = Modifier,eventsViewModel: EventsViewModel) {
+    Text(text = eventsViewModel.currentMaps.toString())
 }
 
+@Composable
+fun Profile(modifier: Modifier = Modifier,profileViewModel: ProfileViewModel) {
+    LazyColumn {
+        item{
+            Text(text = profileViewModel.profile.value.toString())
+        }
+    }
+}
+@Composable
+fun Meta(modifier: Modifier = Modifier,profileViewModel: ProfileViewModel) {
+    LazyColumn {
+        item{
+            Text(text = profileViewModel.club.value.toString())
+        }
+    }
+}
 

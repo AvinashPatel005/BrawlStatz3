@@ -22,7 +22,12 @@ data class Player(
     val trophyArray: List<Int>,
     val winStreak: Template?=null
 ){
-    constructor():this("", listOf(), listOf(), listOf(),"",Club(),"",Template(),"",false,"","", listOf(),Ranked(),
+    constructor():this("", listOf(), listOf(), listOf(),"",
+        Club(),"",
+        Template(),"",false,"","", listOf(),
+        Ranked(),
         listOf(),
-        listOf(),Template())
+        listOf(),
+        Template()
+    )
 }

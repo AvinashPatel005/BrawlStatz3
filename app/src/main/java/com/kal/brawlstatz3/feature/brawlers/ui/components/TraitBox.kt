@@ -1,4 +1,4 @@
-package com.kal.brawlstatz3.ui.brawlers.components
+package com.kal.brawlstatz3.feature.brawlers.ui.components
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image

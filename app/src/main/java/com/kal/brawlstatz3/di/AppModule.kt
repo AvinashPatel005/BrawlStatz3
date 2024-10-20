@@ -3,6 +3,8 @@ package com.kal.brawlstatz3.di
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.kal.brawlstatz3.data.remote.BrawlerService
+import com.kal.brawlstatz3.data.remote.MyBrawlApiService
 import com.kal.brawlstatz3.data.repository.BrawlerRepository
 import com.kal.brawlstatz3.data.repository.BrawlerRepositoryImpl
 import com.kal.brawlstatz3.data.repository.MyBrawlRepository
@@ -43,8 +45,13 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideBrawlerRepository(@Named("Brawlers") brawlersRef: CollectionReference , @Named("Others") othersRef: CollectionReference): BrawlerRepository {
-        return BrawlerRepositoryImpl(brawlersRef,othersRef)
+    fun provideBrawlerService(@Named("Brawlers") brawlersRef: CollectionReference , @Named("Others") othersRef: CollectionReference): BrawlerService {
+        return BrawlerService(brawlersRef,othersRef)
+    }
+    @Provides
+    @Singleton
+    fun provideBrawlerRepository(brawlerService: BrawlerService): BrawlerRepository {
+        return BrawlerRepositoryImpl(brawlerService)
     }
 
     @Provides
@@ -63,9 +70,18 @@ class AppModule {
             level = LogLevel.ALL
         }
     }
+
     @Provides
     @Singleton
-    fun provideMyBrawlRepository(ktorClient: HttpClient): MyBrawlRepository {
-        return MyBrawlRepositoryImpl(ktorClient)
+    fun provideMyBrawlApiService(ktorClient: HttpClient): MyBrawlApiService {
+        return MyBrawlApiService(ktorClient)
     }
+
+    @Provides
+    @Singleton
+    fun provideMyBrawlRepository(myBrawlApiService: MyBrawlApiService): MyBrawlRepository {
+        return MyBrawlRepositoryImpl(myBrawlApiService)
+    }
+
+
 }

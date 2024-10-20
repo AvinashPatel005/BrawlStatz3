@@ -1,4 +1,4 @@
-package com.kal.brawlstatz3.ui.main
+package com.kal.brawlstatz3.ui.components
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
@@ -17,33 +17,33 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.kal.brawlstatz3.Routes
 import com.kal.brawlstatz3.data.model.BottomNavItem
+import com.kal.brawlstatz3.util.Screen
 
 @Composable
-fun BottomNavigation(currentRoute: String, onNavigate:(Routes)->Unit, modifier: Modifier = Modifier) {
+fun BottomBar(currentRoute: String, onNavigate:(Screen)->Unit, modifier: Modifier = Modifier) {
     val bottomNavigationItems = listOf(
         BottomNavItem(
             name = "Brawlers",
-            route = Routes.Brawlers,
+            route = Screen.Brawlers,
             icon = Icons.Outlined.Face,
             selectedIcon = Icons.Filled.Face
         ),
         BottomNavItem(
             name = "Events",
-            route = Routes.Events,
+            route = Screen.Events,
             icon = Icons.Outlined.Notifications,
             selectedIcon = Icons.Filled.Notifications
         ),
         BottomNavItem(
             name = "Meta",
-            route = Routes.Meta,
+            route = Screen.Meta,
             icon = Icons.Outlined.Star,
             selectedIcon = Icons.Filled.Star
         ),
         BottomNavItem(
             name = "Profile",
-            route = Routes.Profile,
+            route = Screen.Profile,
             icon = Icons.Outlined.AccountCircle,
             selectedIcon = Icons.Filled.AccountCircle
         )

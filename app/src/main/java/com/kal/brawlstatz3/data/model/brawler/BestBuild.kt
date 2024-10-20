@@ -1,4 +1,4 @@
-package com.kal.brawlstatz3.data.model
+package com.kal.brawlstatz3.data.model.brawler
 
 data class BestBuild(
     val gadget: Int,

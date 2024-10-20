@@ -8,5 +8,5 @@ data class Ranked(
     val highest: Template
 )
 {
-    constructor():this(Template(),Template())
+    constructor():this(Template(), Template())
 }

@@ -4,7 +4,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.kal.brawlstatz3.feature.brawlers.BrawlerUiEvent
 import com.kal.brawlstatz3.feature.brawlers.ui.components.BrawlerCard
 import com.kal.brawlstatz3.feature.brawlers.viewmodel.BrawlersViewModel
 

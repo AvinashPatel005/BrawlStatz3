@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kal.brawlstatz3.data.model.brawler.Brawler
 import com.kal.brawlstatz3.data.repository.BrawlerRepository
+import com.kal.brawlstatz3.feature.brawlers.BrawlerUiEvent
 import com.kal.brawlstatz3.util.Response
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -27,6 +28,14 @@ class BrawlersViewModel @Inject constructor(
     init {
         getTraits()
         getBrawlerList()
+    }
+
+    fun onEvent(event: BrawlerUiEvent){
+        when(event){
+            is BrawlerUiEvent.CardClicked -> {
+                expandedCardID.intValue = if (expandedCardID.intValue == event.id) -1 else event.id
+            }
+        }
     }
 
     private fun getBrawlerList() = viewModelScope.launch {
@@ -61,7 +70,6 @@ class BrawlersViewModel @Inject constructor(
                 }
                 is Response.Success -> {
                     traits = response.data!!
-
                 }
             }
         }

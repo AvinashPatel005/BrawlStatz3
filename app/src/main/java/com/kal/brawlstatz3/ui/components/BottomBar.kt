@@ -13,6 +13,7 @@ import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -49,35 +50,26 @@ fun BottomBar(currentRoute: String, onNavigate:(Screen)->Unit, modifier: Modifie
         )
 
     )
-
-    BottomAppBar(
-        actions = {
-                  bottomNavigationItems.forEachIndexed { index, item ->
-                      val selected = item.route::class.qualifiedName == currentRoute
-                      NavigationBarItem(
-                          selected = selected,
-                          onClick = {
-                              onNavigate(item.route)
-                          },
-                          icon = {
-                              if(selected){
-                                  Icon(imageVector = item.selectedIcon, contentDescription = null)
-                              }
-                              else{
-                                  Icon(imageVector = item.icon, contentDescription = null)
-                              }
-                          },
-                          label = {
-                              Text(text = item.name)
-                          }
-                      )
-                  }
-        },
-        floatingActionButton = {
-            FloatingActionButton(onClick = {
-
-            }) {
-                Icon(imageVector = Icons.Default.Settings, contentDescription = null)
-            }
-        })
+    NavigationBar {
+        bottomNavigationItems.forEach{item ->
+            val selected = item.route::class.qualifiedName == currentRoute
+            NavigationBarItem(
+                selected = selected,
+                onClick = {
+                    onNavigate(item.route)
+                },
+                icon = {
+                    if(selected){
+                        Icon(imageVector = item.selectedIcon, contentDescription = null)
+                    }
+                    else{
+                        Icon(imageVector = item.icon, contentDescription = null)
+                    }
+                },
+                label = {
+                    Text(text = item.name)
+                }
+            )
+        }
+    }
 }

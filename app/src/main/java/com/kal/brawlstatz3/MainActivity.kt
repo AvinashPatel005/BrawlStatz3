@@ -43,7 +43,6 @@ class MainActivity : ComponentActivity() {
                 val eventsViewModel = hiltViewModel<EventsViewModel>()
                 val navController = rememberNavController()
 
-                //Get Current Route
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 val currentRoute = navBackStackEntry?.destination?.route ?: Screen.Brawlers::class.qualifiedName.orEmpty()
 

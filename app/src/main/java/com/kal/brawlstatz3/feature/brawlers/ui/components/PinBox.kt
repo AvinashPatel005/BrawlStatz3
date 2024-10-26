@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.bumptech.glide.integration.compose.CrossFade
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.integration.compose.placeholder
@@ -26,7 +27,7 @@ fun PinBox(pinURL:String,backgroundColor:Color,modifier: Modifier = Modifier) {
         .background(backgroundColor)
         .padding(horizontal = 6.dp, vertical = 1.dp)
         .size(26.dp), contentAlignment = Alignment.Center ){
-        GlideImage(model = pinURL, contentDescription = null, modifier = Modifier.fillMaxSize() , loading = placeholder(
+        GlideImage(model = pinURL, contentDescription = null, modifier = Modifier.fillMaxSize() ,transition = CrossFade, loading = placeholder(
             R.drawable.question), failure = placeholder(R.drawable.question) )
     }
 }

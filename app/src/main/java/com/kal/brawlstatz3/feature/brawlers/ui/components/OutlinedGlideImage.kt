@@ -10,8 +10,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.bumptech.glide.integration.compose.CrossFade
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
+import com.bumptech.glide.integration.compose.Transition
 import com.bumptech.glide.integration.compose.placeholder
 import com.kal.brawlstatz3.R
 
@@ -36,7 +38,7 @@ fun OutlinedGlideImage(
         .padding(1.dp)
         .clip(RoundedCornerShape(radius)),
         contentDescription = null,
-        loading = placeholder(placeholder),
+        loading = placeholder(placeholder), transition = CrossFade,
         failure = placeholder(R.drawable.placeholder3)
     )
 

@@ -2,6 +2,7 @@ package com.kal.brawlstatz3.feature.brawlers.ui.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -30,11 +31,12 @@ import com.kal.brawlstatz3.util.balooFamily
 
 @Composable
 fun MoveDescription(
-    moveName: String,
-    previewText: String,
-    previewIcon: Int,
-    previewColor: Color,
-    clicked: Boolean,
+    value: String,
+    header: String,
+    icon: Int,
+    headerColor: Color,
+    active: Boolean,
+    onClick:()->Unit
 ) {
     Box {
         Box(
@@ -51,7 +53,9 @@ fun MoveDescription(
                             bottomEnd = 4.dp
                         )
                     )
-                    .background(MaterialTheme.colorScheme.secondaryContainer)
+                    .background(MaterialTheme.colorScheme.surfaceVariant).clickable {
+                        onClick()
+                    }
 
             )
         }
@@ -61,9 +65,9 @@ fun MoveDescription(
                 .padding(start = 43.dp),
         ) {
             Text(
-                previewText,
+                header,
                 fontSize = 12.sp,
-                color = previewColor,
+                color = headerColor,
                 fontFamily = balooFamily,
                 fontWeight = FontWeight.ExtraBold,
                 style = TextStyle(
@@ -71,22 +75,23 @@ fun MoveDescription(
                 )
             )
             Text(
-                moveName.uppercase(),
+                value.uppercase(),
                 fontSize = 14.sp,
-                color = MaterialTheme.colorScheme.onBackground,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
                 fontWeight = FontWeight.Bold,
+
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier.offset(y = (-4).dp)
             )
         }
         Image(
-            painter = painterResource(id = previewIcon),
+            painter = painterResource(id = icon),
             contentDescription = null,
             modifier = Modifier
                 .size(35.dp)
                 .background(Color.Transparent)
         )
-        if (clicked) {
+        if (active) {
             Image(
                 painter = painterResource(id = R.drawable.icon_overlay),
                 contentDescription = null,

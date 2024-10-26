@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kal.brawlstatz3.data.model.brawler.Brawler
+import com.kal.brawlstatz3.data.model.brawler.NameDescription
 import com.kal.brawlstatz3.data.repository.BrawlerRepository
 import com.kal.brawlstatz3.feature.brawlers.BrawlerUiEvent
 import com.kal.brawlstatz3.util.Response
@@ -24,6 +25,7 @@ class BrawlersViewModel @Inject constructor(
 
     var brawlerlist = mutableStateListOf<Brawler>()
     var brawlerMap = mapOf<Int, Brawler>()
+    var info = mutableStateOf(NameDescription())
 
     init {
         getTraits()
@@ -34,6 +36,10 @@ class BrawlersViewModel @Inject constructor(
         when(event){
             is BrawlerUiEvent.CardClicked -> {
                 expandedCardID.intValue = if (expandedCardID.intValue == event.id) -1 else event.id
+                info.value = NameDescription()
+            }
+            is BrawlerUiEvent.InfoClicked -> {
+                info.value = event.info
             }
         }
     }

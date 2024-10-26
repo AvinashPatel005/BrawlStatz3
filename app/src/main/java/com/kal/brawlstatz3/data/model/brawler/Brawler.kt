@@ -8,6 +8,7 @@ data class Brawler(
     val counters: List<Int>,
     val gadgets: List<NameDescription>,
     val id: Int,
+    val hypercharge:NameDescription?,
     val mastery: String,
     val model3d: String,
     val movementSpeed: String,
@@ -22,6 +23,6 @@ data class Brawler(
     constructor(): this("",
         NameDescription(),
         NameDescription(),
-        BestBuild(), listOf(), listOf(),0,"","","","","",
+        BestBuild(), listOf(), listOf(),0,null,"","","","","",
         listOf(),"",null,"",0)
 }

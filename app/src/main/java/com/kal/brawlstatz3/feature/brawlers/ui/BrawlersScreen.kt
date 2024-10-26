@@ -13,7 +13,7 @@ fun BrawlersScreen(modifier: Modifier = Modifier, brawlersViewModel: BrawlersVie
         LazyColumn{
             items(brawlersViewModel.brawlerlist){ brawler ->
                 val isExpanded = brawlersViewModel.expandedCardID.intValue == brawler.id
-                BrawlerCard(brawler = brawler, traitText = brawlersViewModel.traits[brawler.trait].toString()  ,isExpanded = isExpanded , onClick = {brawlerUiEvent->
+                BrawlerCard(brawler = brawler, traitText = brawlersViewModel.traits[brawler.trait].toString()  ,isExpanded = isExpanded , info = brawlersViewModel.info.value ,onClick = {brawlerUiEvent->
                     brawlersViewModel.onEvent(brawlerUiEvent)
                 })
             }

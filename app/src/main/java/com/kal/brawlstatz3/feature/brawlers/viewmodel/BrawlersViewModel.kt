@@ -53,7 +53,18 @@ class BrawlersViewModel @Inject constructor(
             }
 
             is BrawlerUiEvent.SearchToggled -> {
-                isSearchActive.value = !isSearchActive.value
+                if (isSearchActive.value){
+                    if (searchQuery.value.isNotEmpty()){
+                        searchQuery.value=""
+                        search(searchQuery.value)
+                    }
+                    else{
+                        isSearchActive.value = false
+                    }
+                }
+                else{
+                    isSearchActive.value = true
+                }
             }
         }
     }

@@ -7,9 +7,9 @@ import androidx.compose.ui.text.font.FontWeight
 import com.kal.brawlstatz3.R
 
 val balooFamily = FontFamily(
-        Font(R.font.baloo2regular, FontWeight.Light),
-        Font(R.font.baloo2regular, FontWeight.Normal),
-        Font(R.font.baloo2regular, FontWeight.Normal, FontStyle.Italic),
-        Font(R.font.baloo2medium, FontWeight.Medium),
-        Font(R.font.baloo2bold, FontWeight.Bold)
+    Font(R.font.baloo2regular, FontWeight.Light),
+    Font(R.font.baloo2regular, FontWeight.Normal),
+    Font(R.font.baloo2regular, FontWeight.Normal, FontStyle.Italic),
+    Font(R.font.baloo2medium, FontWeight.Medium),
+    Font(R.font.baloo2bold, FontWeight.Bold)
 )

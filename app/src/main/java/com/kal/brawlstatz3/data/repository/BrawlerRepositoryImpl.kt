@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 class BrawlerRepositoryImpl @Inject constructor(
     private val brawlerService: BrawlerService,
-): BrawlerRepository {
+) : BrawlerRepository {
     override fun getBrawlerList(): Flow<Response<Map<Int, Brawler>>> {
         return brawlerService.getBrawlerList()
     }

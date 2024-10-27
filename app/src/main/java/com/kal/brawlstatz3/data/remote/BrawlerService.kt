@@ -13,21 +13,20 @@ import javax.inject.Named
 class BrawlerService @Inject constructor(
     @Named("Brawlers") private val brawlerReference: CollectionReference,
     @Named("Others") private val othersReference: CollectionReference
-){
-    fun getBrawlerList()= callbackFlow {
+) {
+    fun getBrawlerList() = callbackFlow {
         trySend(Response.Loading)
-        var snapshotListener = brawlerReference.orderBy("searchQuery").addSnapshotListener { value,e ->
+        var snapshotListener = brawlerReference.orderBy("name").addSnapshotListener { value, e ->
             val brawlers = ArrayList<Brawler>()
             val brawlersMap = hashMapOf<Int, Brawler>()
-            val response = if(value!=null){
+            val response = if (value != null) {
                 for (doc in value) {
                     val brawler = doc.toObject<Brawler>()
                     brawlersMap[brawler.id] = brawler
                     brawlers.add(brawler)
                 }
                 Response.Success(brawlersMap)
-            }
-            else{
+            } else {
                 Response.Failure(e)
             }
             trySend(response)
@@ -37,13 +36,13 @@ class BrawlerService @Inject constructor(
         }
     }
 
+
     suspend fun getTraitList(): Response<MutableMap<String, Any>?> {
         try {
-            val res =  othersReference.document("traits").get().await()
+            val res = othersReference.document("traits").get().await()
             return Response.Success(res.data)
-        }
-        catch (e:Exception){
-            return Response.Failure(e=e)
+        } catch (e: Exception) {
+            return Response.Failure(e = e)
         }
     }
 }

@@ -1,6 +1,10 @@
-package com.kal.brawlstatz3.feature.events.ui
+package com.kal.brawlstatz3.ui.components
 
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -16,7 +20,8 @@ fun AppTopBar(
     brawlersViewModel: BrawlersViewModel,
     eventsViewModel: EventsViewModel,
     profileViewModel: ProfileViewModel,
-    currentRoute: String
+    currentRoute: String,
+    onDrawerClicked: () -> Unit
 ) {
     TopAppBar(
         title = {
@@ -39,6 +44,13 @@ fun AppTopBar(
             }
             if (currentRoute == Screen.Profile::class.qualifiedName) {
                 Text(text = "Profile")
+            }
+        },
+        navigationIcon = {
+            IconButton(onClick = {
+                onDrawerClicked()
+            }) {
+                Icon(imageVector = Icons.Default.Menu, contentDescription = null)
             }
         }
     )

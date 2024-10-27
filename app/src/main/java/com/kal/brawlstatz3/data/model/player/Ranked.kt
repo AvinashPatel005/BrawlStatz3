@@ -6,7 +6,6 @@ import kotlinx.serialization.Serializable
 data class Ranked(
     val current: Template,
     val highest: Template
-)
-{
-    constructor():this(Template(), Template())
+) {
+    constructor() : this(Template(), Template())
 }

@@ -1,6 +1,7 @@
 package com.kal.brawlstatz3.feature.brawlers.ui
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -26,6 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
@@ -42,11 +44,16 @@ fun BrawlersTopBar(
     onEvent: (BrawlerUiEvent) -> Unit,
 ) {
     val focusRequester = remember { FocusRequester() }
+    val color = animateColorAsState(
+        targetValue = if (isSearchActive) SearchBarDefaults.colors().containerColor else Color.Transparent,
+        label = "SearchBarColor"
+    )
     val scope = rememberCoroutineScope()
     Row(
-        Modifier.background(SearchBarDefaults.colors().containerColor, RoundedCornerShape(100)),
+        Modifier.background(color.value, RoundedCornerShape(100)),
         verticalAlignment = Alignment.CenterVertically
     ) {
+
         AnimatedVisibility(visible = isSearchActive) {
             BasicTextField(value = searchQuery,
                 textStyle = TextStyle(color = SearchBarDefaults.inputFieldColors().focusedTextColor),
@@ -97,6 +104,7 @@ fun BrawlersTopBar(
                 contentDescription = null
             )
         }
+
     }
 
 }

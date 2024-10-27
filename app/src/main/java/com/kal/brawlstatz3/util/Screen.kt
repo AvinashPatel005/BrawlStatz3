@@ -2,16 +2,16 @@ package com.kal.brawlstatz3.util
 
 import kotlinx.serialization.Serializable
 
-sealed class Screen{
+sealed class Screen {
     @Serializable
-    data object Brawlers: Screen()
+    data object Brawlers : Screen()
 
     @Serializable
-    data object Meta: Screen()
+    data object Meta : Screen()
 
     @Serializable
-    data object Profile: Screen()
+    data object Profile : Screen()
 
     @Serializable
-    data object Events: Screen()
+    data object Events : Screen()
 }

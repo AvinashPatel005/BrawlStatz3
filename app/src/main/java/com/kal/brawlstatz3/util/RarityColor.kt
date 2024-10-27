@@ -8,14 +8,16 @@ import com.kal.brawlstatz3.ui.theme.rare
 import com.kal.brawlstatz3.ui.theme.starting
 import com.kal.brawlstatz3.ui.theme.superrare
 
-fun getRarityColor(rarity:String):Color{
-    return when(rarity){
+fun getRarityColor(rarity: String): Color {
+    return when (rarity) {
         "LEGENDARY" -> legendary
-        "MYTHIC" ->mythic
-        "EPIC" ->epic
+        "MYTHIC" -> mythic
+        "EPIC" -> epic
         "SUPER RARE" -> superrare
-        "RARE" ->rare
-        "STARTING" ->starting
-        else -> {Color.Black}
+        "RARE" -> rare
+        "STARTING" -> starting
+        else -> {
+            Color.Black
+        }
     }
 }

@@ -20,14 +20,24 @@ import com.kal.brawlstatz3.R
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun PinBox(pinURL:String,backgroundColor:Color,modifier: Modifier = Modifier) {
-    Box(modifier = Modifier
-        .padding(horizontal = 1.dp)
-        .clip(RoundedCornerShape(50))
-        .background(backgroundColor)
-        .padding(horizontal = 6.dp, vertical = 1.dp)
-        .size(26.dp), contentAlignment = Alignment.Center ){
-        GlideImage(model = pinURL, contentDescription = null, modifier = Modifier.fillMaxSize() ,transition = CrossFade, loading = placeholder(
-            R.drawable.question), failure = placeholder(R.drawable.question) )
+fun PinBox(pinURL: String, backgroundColor: Color, modifier: Modifier = Modifier) {
+    Box(
+        modifier = Modifier
+            .padding(horizontal = 1.dp)
+            .clip(RoundedCornerShape(50))
+            .background(backgroundColor)
+            .padding(horizontal = 6.dp, vertical = 1.dp)
+            .size(26.dp), contentAlignment = Alignment.Center
+    ) {
+        GlideImage(
+            model = pinURL,
+            contentDescription = null,
+            modifier = Modifier.fillMaxSize(),
+            transition = CrossFade,
+            loading = placeholder(
+                R.drawable.question
+            ),
+            failure = placeholder(R.drawable.question)
+        )
     }
 }

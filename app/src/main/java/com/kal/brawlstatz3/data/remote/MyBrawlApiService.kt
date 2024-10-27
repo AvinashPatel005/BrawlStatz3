@@ -21,7 +21,9 @@ class MyBrawlApiService @Inject constructor(private val ktorClient: HttpClient) 
 
     suspend fun getProfile(tag: String): Response<Player> {
         try {
-            val response = ktorClient.get("https://zs74ow3jyxjfktc5cti6uzysfu0zjjpa.lambda-url.ap-south-1.on.aws/?tag=${tag}").body<Player>()
+            val response =
+                ktorClient.get("https://zs74ow3jyxjfktc5cti6uzysfu0zjjpa.lambda-url.ap-south-1.on.aws/?tag=${tag}")
+                    .body<Player>()
             return Response.Success(response)
         } catch (e: Exception) {
             return Response.Failure(e = e)
@@ -30,7 +32,9 @@ class MyBrawlApiService @Inject constructor(private val ktorClient: HttpClient) 
 
     suspend fun getClub(tag: String): Response<Club> {
         try {
-            val response = ktorClient.get("https://clh6sjyjijbqnxeoxtvxiz2s7a0zncjc.lambda-url.ap-south-1.on.aws/?tag=${tag}").body<Club>()
+            val response =
+                ktorClient.get("https://clh6sjyjijbqnxeoxtvxiz2s7a0zncjc.lambda-url.ap-south-1.on.aws/?tag=${tag}")
+                    .body<Club>()
             return Response.Success(response)
         } catch (e: Exception) {
             return Response.Failure(e = e)

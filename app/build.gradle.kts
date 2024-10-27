@@ -24,8 +24,8 @@ android {
         applicationId = "com.kal.brawlstatz3"
         minSdk = 24
         targetSdk = 35
-        versionCode = 9
-        versionName = "0.32"
+        versionCode = 10
+        versionName = "0.35"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -74,10 +74,6 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
 
-    implementation(libs.firebase.storage.ktx)
-    implementation(libs.firebase.firestore.ktx)
-    implementation(libs.firebase.messaging.ktx)
-
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -86,31 +82,31 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
-    implementation (libs.hilt.android)
+
+    implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
-
-    implementation(libs.kotlinx.serialization.json)
-
-    implementation(libs.androidx.hilt.navigation.compose)
-
-    implementation (libs.androidx.core.splashscreen)
-    implementation(libs.kotlinx.coroutines.core)
-    implementation(libs.kotlinx.coroutines.android)
-
-    implementation (libs.github.glide)
-
-
-    implementation(libs.sceneview)
-
-    implementation(libs.navigation.compose)
-    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.hilt.navigation.compose)
 
     implementation(libs.firebase.appcheck)
+    implementation(libs.firebase.storage.ktx)
+    implementation(libs.firebase.firestore.ktx)
+    implementation(libs.firebase.messaging.ktx)
+
+    implementation(libs.kotlinx.serialization.json)
+
+    implementation(libs.navigation.compose)
+    implementation(libs.core.splashscreen)
+
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.kotlinx.serialization.json)
+
+    implementation(libs.github.glide)
+    implementation(libs.github.sceneview)
 
     implementation(libs.ktor.client.core)
     implementation(libs.ktor.client.okhttp)
     implementation(libs.ktor.client.content.negotiation)
     implementation(libs.ktor.serialization.kotlinx.json)
-    implementation(libs.ktor.client.logging)
 
 }

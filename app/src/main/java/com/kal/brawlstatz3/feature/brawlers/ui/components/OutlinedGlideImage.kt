@@ -13,14 +13,13 @@ import androidx.compose.ui.unit.dp
 import com.bumptech.glide.integration.compose.CrossFade
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
-import com.bumptech.glide.integration.compose.Transition
 import com.bumptech.glide.integration.compose.placeholder
 import com.kal.brawlstatz3.R
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun OutlinedGlideImage(
-    url:String,
+    url: String,
     placeholder: Int,
     size: Dp,
     strokeWidth: Dp,
@@ -29,14 +28,16 @@ fun OutlinedGlideImage(
     modifier: Modifier = Modifier
 ) {
 
-    GlideImage(model = url,modifier = modifier
-        .size(size)
-        .border(
-            strokeWidth,
-            strokeColor, RoundedCornerShape(radius)
-        )
-        .padding(1.dp)
-        .clip(RoundedCornerShape(radius)),
+    GlideImage(
+        model = url,
+        modifier = modifier
+            .size(size)
+            .border(
+                strokeWidth,
+                strokeColor, RoundedCornerShape(radius)
+            )
+            .padding(1.dp)
+            .clip(RoundedCornerShape(radius)),
         contentDescription = null,
         loading = placeholder(placeholder), transition = CrossFade,
         failure = placeholder(R.drawable.placeholder3)

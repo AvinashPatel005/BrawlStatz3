@@ -6,6 +6,6 @@ import kotlinx.serialization.Serializable
 data class Club(
     val tag: String,
     val name: String
-){
-    constructor():this("","")
+) {
+    constructor() : this("", "")
 }

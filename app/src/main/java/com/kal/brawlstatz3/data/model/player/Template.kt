@@ -7,6 +7,6 @@ data class Template(
     val icon: String,
     val name: String,
     val value: String
-){
-    constructor():this("","","")
+) {
+    constructor() : this("", "", "")
 }

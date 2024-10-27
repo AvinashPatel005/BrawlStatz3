@@ -14,7 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val myBrawlRepository: MyBrawlRepository
-) :ViewModel() {
+) : ViewModel() {
     var isLoading = mutableStateOf(false)
     var errorLog = mutableStateOf("")
 
@@ -28,30 +28,30 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    private suspend fun getProfile(tag:String) {
-        isLoading.value=true
-        println("Fetching Profile")
+    private suspend fun getProfile(tag: String) {
+        isLoading.value = true
         myBrawlRepository.getProfile(tag).let { response ->
-            when(response){
+            when (response) {
                 is Response.Failure -> {
                     errorLog.value = response.e?.message.toString()
-                    profile.value = Player().copy(accountCreated =errorLog.value)
+                    profile.value = Player().copy(accountCreated = errorLog.value)
                     isLoading.value = true
                 }
 
                 is Response.Loading -> {
                     isLoading.value = true
                 }
+
                 is Response.Success -> {
                     profile.value = response.data
                 }
             }
         }
     }
-    private suspend fun getClub(tag:String){
-        println("Fetching Club" + profile.value.club.tag)
+
+    private suspend fun getClub(tag: String) {
         myBrawlRepository.getClub(tag).let { response ->
-            when(response){
+            when (response) {
                 is Response.Failure -> {
                     errorLog.value = response.e?.message.toString()
                     isLoading.value = false
@@ -60,6 +60,7 @@ class ProfileViewModel @Inject constructor(
                 is Response.Loading -> {
                     isLoading.value = true
                 }
+
                 is Response.Success -> {
                     club.value = response.data
                     isLoading.value = false

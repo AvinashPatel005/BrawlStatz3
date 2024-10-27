@@ -19,7 +19,7 @@ import com.kal.brawlstatz3.util.BottomNavItem
 import com.kal.brawlstatz3.util.Screen
 
 @Composable
-fun BottomBar(currentRoute: String, onNavigate:(Screen)->Unit, modifier: Modifier = Modifier) {
+fun BottomBar(currentRoute: String, onNavigate: (Screen) -> Unit, modifier: Modifier = Modifier) {
     val bottomNavigationItems = listOf(
         BottomNavItem(
             name = "Brawlers",
@@ -48,7 +48,7 @@ fun BottomBar(currentRoute: String, onNavigate:(Screen)->Unit, modifier: Modifie
 
     )
     NavigationBar {
-        bottomNavigationItems.forEach{item ->
+        bottomNavigationItems.forEach { item ->
             val selected = item.route::class.qualifiedName == currentRoute
             NavigationBarItem(
                 selected = selected,
@@ -56,10 +56,9 @@ fun BottomBar(currentRoute: String, onNavigate:(Screen)->Unit, modifier: Modifie
                     onNavigate(item.route)
                 },
                 icon = {
-                    if(selected){
+                    if (selected) {
                         Icon(imageVector = item.selectedIcon, contentDescription = null)
-                    }
-                    else{
+                    } else {
                         Icon(imageVector = item.icon, contentDescription = null)
                     }
                 },

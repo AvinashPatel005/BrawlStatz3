@@ -7,6 +7,6 @@ import com.kal.brawlstatz3.util.Response
 
 interface MyBrawlRepository {
     suspend fun getEvent(): Response<Event>
-    suspend fun getProfile(tag:String): Response<Player>
-    suspend fun getClub(tag:String): Response<Club>
+    suspend fun getProfile(tag: String): Response<Player>
+    suspend fun getClub(tag: String): Response<Club>
 }

@@ -9,7 +9,7 @@ data class BrawlersData(
     val gadget: List<String>,
     val gears: List<String>,
     val highestTrophy: String,
-    val mastery: Template?=null,
+    val mastery: Template? = null,
     val name: String,
     val powerLevel: String,
     val seasonEndTrophy: String,

@@ -14,7 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class EventsViewModel @Inject constructor(
     private val myBrawlRepository: MyBrawlRepository
-) :ViewModel() {
+) : ViewModel() {
     var isLoading = mutableStateOf(false)
     var errorLog = mutableStateOf("")
 
@@ -25,18 +25,20 @@ class EventsViewModel @Inject constructor(
         getEvents()
     }
 
-    private fun getEvents() = viewModelScope.launch{
-        isLoading.value=true
+    private fun getEvents() = viewModelScope.launch {
+        isLoading.value = true
         println("Fetching Events")
-        myBrawlRepository.getEvent().let { response->
-            when(response){
+        myBrawlRepository.getEvent().let { response ->
+            when (response) {
                 is Response.Failure -> {
                     errorLog.value = response.e?.message.toString()
                     isLoading.value = false
                 }
+
                 is Response.Loading -> {
                     isLoading.value = true
                 }
+
                 is Response.Success -> {
                     currentMaps.addAll(response.data.active)
                     upcomingMaps.addAll(response.data.upcoming)

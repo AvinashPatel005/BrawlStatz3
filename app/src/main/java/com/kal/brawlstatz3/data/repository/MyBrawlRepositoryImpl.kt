@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 class MyBrawlRepositoryImpl @Inject constructor(
     private val myBrawlApiService: MyBrawlApiService
-): MyBrawlRepository {
+) : MyBrawlRepository {
     override suspend fun getEvent(): Response<Event> {
         return myBrawlApiService.getEvent()
     }

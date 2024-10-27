@@ -36,7 +36,7 @@ fun MoveDescription(
     icon: Int,
     headerColor: Color,
     active: Boolean,
-    onClick:()->Unit
+    onClick: () -> Unit
 ) {
     Box {
         Box(
@@ -53,7 +53,8 @@ fun MoveDescription(
                             bottomEnd = 4.dp
                         )
                     )
-                    .background(MaterialTheme.colorScheme.surfaceVariant).clickable {
+                    .background(MaterialTheme.colorScheme.surfaceVariant)
+                    .clickable {
                         onClick()
                     }
 

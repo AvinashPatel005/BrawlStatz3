@@ -118,7 +118,7 @@ private fun CardPreview() {
     BrawlerCard(brawler = brawler, traitText = "ability to swim", isExpanded = true , info = NameDescription() ,onClick = {})
 }
 
-@OptIn(ExperimentalGlideComposeApi::class
+@OptIn(ExperimentalGlideComposeApi::class, ExperimentalFoundationApi::class
 )
 @Composable
 fun BrawlerCard(

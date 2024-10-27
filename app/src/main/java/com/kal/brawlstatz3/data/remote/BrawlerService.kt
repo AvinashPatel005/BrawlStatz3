@@ -16,15 +16,17 @@ class BrawlerService @Inject constructor(
 ){
     fun getBrawlerList()= callbackFlow {
         trySend(Response.Loading)
-        var snapshotListener = brawlerReference.orderBy("name").addSnapshotListener { value,e ->
+        var snapshotListener = brawlerReference.orderBy("searchQuery").addSnapshotListener { value,e ->
             val brawlers = ArrayList<Brawler>()
             val brawlersMap = hashMapOf<Int, Brawler>()
             var response = if(value!=null){
                 for (doc in value) {
+                    println("Lets see what we got "+doc.data)
                     val brawler = doc.toObject<Brawler>()
                     brawlersMap[brawler.id] = brawler
                     brawlers.add(brawler)
                 }
+                println("Lets see what we got "+brawlersMap)
                 Response.Success(brawlersMap)
             }
             else{

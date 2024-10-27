@@ -52,9 +52,6 @@ import kotlinx.coroutines.launch
 @Composable
 fun BrawlersScreen(modifier: Modifier = Modifier, brawlersViewModel: BrawlersViewModel) {
     Column {
-        Text(text = brawlersViewModel.brawlerlist.toString())
-        Text(text = brawlersViewModel.brawlerMap.toString())
-        Text(text = brawlersViewModel.traits.toString())
         if (brawlersViewModel.isLoading.value) {
             Box(
                 contentAlignment = Alignment.Center,

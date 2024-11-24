@@ -49,11 +49,11 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
 
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
-                val currentRoute = navBackStackEntry?.destination?.route
-                    ?: Screen.Brawlers::class.qualifiedName.orEmpty()
+                val currentRoute = navBackStackEntry?.destination?.route?: Screen.Brawlers::class.qualifiedName.orEmpty()
 
                 val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
                 val scope = rememberCoroutineScope()
+
                 ModalNavigationDrawer(
                     drawerContent = {
                         ModalDrawerSheet {
@@ -103,7 +103,7 @@ class MainActivity : ComponentActivity() {
                                 EventsScreen(eventsViewModel = eventsViewModel)
                             }
                             composable<Screen.Meta> {
-                                MetaScreen(profileViewModel = profileViewModel)
+                                MetaScreen(brawlersViewModel = brawlerViewModel)
                             }
                             composable<Screen.Profile> {
                                 ProfileScreen(profileViewModel = profileViewModel)

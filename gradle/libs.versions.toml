@@ -1,23 +1,23 @@
 [versions]
 agp = "8.5.2"
 kotlin = "2.0.0"
-coreKtx = "1.13.1"
+coreKtx = "1.15.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
-lifecycleRuntimeKtx = "2.8.6"
+lifecycleRuntimeKtx = "2.8.7"
 activityCompose = "1.9.3"
-composeBom = "2024.10.00"
+composeBom = "2024.11.00"
 ksp = "2.0.0-1.0.22"
 googleGmsGoogleServices = "4.4.2"
 
 firebaseAppcheck = "18.0.0"
 firebaseStorageKtx = "21.0.1"
 firebaseFirestoreKtx = "25.1.1"
-firebaseMessagingKtx = "24.0.3"
+firebaseMessagingKtx = "24.1.0"
 
 coreSplashscreen = "1.0.1"
-composeNavigation = "2.8.3"
+composeNavigation = "2.8.4"
 
 hilt = "2.49"
 hiltAndroidGradlePlugin = "2.52"

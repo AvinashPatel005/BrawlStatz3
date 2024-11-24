@@ -21,4 +21,8 @@ class FirebaseStorageUtil {
 
     fun getNeutralPin(id: Int) =
         "https://firebasestorage.googleapis.com/v0/b/brawlstatz-ba4cf.appspot.com/o/brawlers%2F${id}%2FPin.webp?alt=media"
+
+    fun getGearURL(name : String) =
+        "https://firebasestorage.googleapis.com/v0/b/brawlstatz-ba4cf.appspot.com/o/gears%2F${name}.webp?alt=media"
+
 }

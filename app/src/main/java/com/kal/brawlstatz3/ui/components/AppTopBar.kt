@@ -32,9 +32,7 @@ fun AppTopBar(
                 BrawlersTopBar(
                     isSearchActive = brawlersViewModel.isSearchActive.value,
                     searchQuery = brawlersViewModel.searchQuery.value,
-                    onEvent = {
-                        brawlersViewModel.onEvent(it)
-                    })
+                    onEvent =  brawlersViewModel::onEvent)
             }
             if (currentRoute == Screen.Events::class.qualifiedName) {
                 Text(text = "Events")

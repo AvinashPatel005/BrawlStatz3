@@ -15,7 +15,7 @@ data class Brawler(
     val name: String,
     val rarity: String,
     val starpowers: List<NameDescription>,
-    val tier: String,
+    val tier: List<String>,
     val trait: String?,
     val type: String,
     val version: Int
@@ -25,6 +25,6 @@ data class Brawler(
         NameDescription(),
         NameDescription(),
         BestBuild(), listOf(), listOf(), 0, null, "", "", "", "", "",
-        listOf(), "", null, "", 0
+        listOf(), listOf(), null, "", 0
     )
 }

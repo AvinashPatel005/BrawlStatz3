@@ -19,3 +19,8 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file searchQuery.
 #-renamesourcefileattribute SourceFile
+-dontwarn org.slf4j.impl.StaticLoggerBinder
+-keep class com.kal.brawlstatz3.data.model.brawler.* {*;}
+-keep class com.kal.brawlstatz3.data.model.club.* {*;}
+-keep class com.kal.brawlstatz3.data.model.event.* {*;}
+-keep class com.kal.brawlstatz3.data.model.player.* {*;}

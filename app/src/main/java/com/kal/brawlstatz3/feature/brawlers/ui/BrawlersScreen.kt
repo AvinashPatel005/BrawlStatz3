@@ -32,9 +32,7 @@ fun BrawlersScreen(brawlersViewModel: BrawlersViewModel,modifier: Modifier = Mod
                         traitText = brawlersViewModel.traits[brawler.trait].toString(),
                         isExpanded = isExpanded,
                         info = brawlersViewModel.info.value,
-                        onClick = { brawlerUiEvent ->
-                            brawlersViewModel.onEvent(brawlerUiEvent)
-                        },
+                        onClick = brawlersViewModel::onEvent,
                         modifier = Modifier.animateItem()
                     )
                 }

@@ -58,70 +58,6 @@ import com.kal.brawlstatz3.feature.brawlers.BrawlerUiEvent
 import com.kal.brawlstatz3.util.FirebaseStorageUtil
 import com.kal.brawlstatz3.util.getRarityColor
 
-@Preview(showBackground = true)
-@Composable
-private fun CardPreview() {
-    val brawler = Brawler().copy(
-        about = "Leon shoots a quick salvo of blades at his target. His Super trick is a smoke bomb that makes him invisible for a little while!",
-        attack = NameDescription(
-            name = "Spinner Blades",
-            description = "Leon flicks his wrist and fires four Spinner Blades. The blades deal less damage the farther they travel."
-        ),
-        attackSuper = NameDescription(
-            name = "Smoke Bomb",
-            description = "Leon becomes invisible for 6 seconds. If he attacks, he will be revealed. Enemies close to Leon will be able to spot him."
-        ),
-        bestBuild = BestBuild(
-            gadget = 1,
-            gears = listOf("leong1", "sg"),
-            starpower = 1
-        ),
-        counters = listOf(16000017, 16000012, 16000045),
-        gadgets = listOf(
-            NameDescription(
-                name = "CLONE PROJECTOR",
-                description = "Leon creates an illusion of himself to confuse his enemies."
-            ),
-            NameDescription(
-                name = "LOLLIPOP DROP",
-                description = "Leon creates a stealthy area for his team to be in. The lollipop slowly loses its health over time."
-            )
-        ),
-        hypercharge = NameDescription(
-            name = "SMOKE TRAILS",
-            description = "When Leon uses his Super, he gains a 30% boost to his movement speed for the duration of his invisibility."
-        ),
-        id = 16000023,
-        mastery = "The Sneaky",
-        model3d = "false",
-        movementSpeed = "Very Fast",
-        name = "LEON",
-        rarity = "LEGENDARY",
-        starpowers = listOf(
-            NameDescription(
-                name = "SMOKE TRAILS",
-                description = "When Leon uses his Super, he gains a 30% boost to his movement speed for the duration of his invisibility."
-            ),
-            NameDescription(
-                name = "INVISIHEAL",
-                description = "Leon recovers 1000 health per second while his Super is active."
-            )
-        ),
-        tier = "A07",
-        type = "Assassin",
-        version = 0
-    )
-    BrawlerCard(
-        brawler = brawler,
-        traitText = "ability to swim",
-        isExpanded = true,
-        info = NameDescription(),
-        onClick = {})
-}
-
-@OptIn(
-    ExperimentalGlideComposeApi::class, ExperimentalFoundationApi::class
-)
 @Composable
 fun BrawlerCard(
     brawler: Brawler,
@@ -260,56 +196,28 @@ fun BrawlerCard(
                 ) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         brawler.gadgets.forEachIndexed { index, gadget ->
-                            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                                GlideImage(model = FirebaseStorageUtil().getGadgetURL(
-                                    brawler.id,
-                                    index
-                                ),
-                                    loading = placeholder(R.drawable.icon_gadget),
-                                    transition = CrossFade,
-                                    contentDescription = null,
-                                    modifier = Modifier
-                                        .clip(RoundedCornerShape(100))
-                                        .size(40.dp)
-                                        .clickable {
-                                            onClick(BrawlerUiEvent.InfoClicked(gadget))
-                                        })
-                                Box(
-                                    modifier = Modifier
-                                        .padding(top = 2.dp)
-                                        .background(
-                                            if (info == gadget) Color.White else Color.Transparent,
-                                            RoundedCornerShape(100)
-                                        )
-                                        .size(6.dp)
-                                )
-                            }
-                            if (index < brawler.gadgets.size - 1) Spacer(modifier = Modifier.width(4.dp))
+                            ImageActive(
+                                url = FirebaseStorageUtil().getGadgetURL(brawler.id, index),
+                                isActive = info == gadget,
+                                placeholder = R.drawable.icon_gadget,
+                                size = 40.dp,
+                                onClick = {
+                                    onClick(BrawlerUiEvent.InfoClicked(gadget))
+                                }
+                            )
+                            if (index < brawler.gadgets.size - 1)
+                                Spacer(modifier = Modifier.width(4.dp))
                         }
-
                     }
                     if (brawler.hypercharge != null) {
-                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                            GlideImage(model = FirebaseStorageUtil().getHyperChargeURL(brawler.id),
-                                contentDescription = null,
-                                loading = placeholder(R.drawable.icon_hypercharge_blank),
-                                transition = CrossFade,
-                                modifier = Modifier
-                                    .clip(RoundedCornerShape(100))
-                                    .size(56.dp)
-                                    .clickable {
-                                        onClick(BrawlerUiEvent.InfoClicked(brawler.hypercharge))
-                                    })
-                            Box(
-                                modifier = Modifier
-                                    .padding(vertical = 2.dp)
-                                    .background(
-                                        if (info == brawler.hypercharge) Color.White else Color.Transparent,
-                                        RoundedCornerShape(100)
-                                    )
-                                    .size(6.dp)
-                            )
-                        }
+                        ImageActive(
+                            url = FirebaseStorageUtil().getHyperChargeURL(brawler.id),
+                            isActive = info == brawler.hypercharge,
+                            placeholder = R.drawable.icon_hypercharge_blank,
+                            size = 56.dp,
+                            onClick = {
+                                onClick(BrawlerUiEvent.InfoClicked(brawler.hypercharge))
+                            })
                     } else {
                         Column {
                             Image(
@@ -323,35 +231,17 @@ fun BrawlerCard(
                     }
                     Row {
                         brawler.starpowers.forEachIndexed { index, starpower ->
-                            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                                GlideImage(model = FirebaseStorageUtil().getStarPowerURL(
-                                    brawler.id,
-                                    index
-                                ),
-                                    contentDescription = null,
-                                    transition = CrossFade,
-                                    loading = placeholder(R.drawable.icon_starpower),
-                                    modifier = Modifier
-                                        .clip(RoundedCornerShape(100))
-                                        .size(40.dp)
-                                        .clickable {
-                                            onClick(BrawlerUiEvent.InfoClicked(starpower))
-                                        })
-                                Box(
-                                    modifier = Modifier
-                                        .padding(top = 2.dp)
-                                        .background(
-                                            if (info == starpower) Color.White else Color.Transparent,
-                                            RoundedCornerShape(100)
-                                        )
-                                        .size(6.dp)
-                                )
-                            }
-                            if (index < brawler.starpowers.size - 1) Spacer(
-                                modifier = Modifier.width(
-                                    4.dp
-                                )
+                            ImageActive(
+                                url = FirebaseStorageUtil().getStarPowerURL(brawler.id, index),
+                                isActive = info == starpower,
+                                placeholder = R.drawable.icon_starpower,
+                                size = 40.dp,
+                                onClick = {
+                                    onClick(BrawlerUiEvent.InfoClicked(starpower))
+                                }
                             )
+                            if (index < brawler.starpowers.size - 1)
+                                Spacer(modifier = Modifier.width(4.dp))
                         }
                     }
 

@@ -7,7 +7,7 @@ junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 lifecycleRuntimeKtx = "2.8.7"
 activityCompose = "1.9.3"
-composeBom = "2024.11.00"
+composeBom = "2024.12.01"
 ksp = "2.0.0-1.0.22"
 googleGmsGoogleServices = "4.4.2"
 
@@ -17,7 +17,7 @@ firebaseFirestoreKtx = "25.1.1"
 firebaseMessagingKtx = "24.1.0"
 
 coreSplashscreen = "1.0.1"
-composeNavigation = "2.8.4"
+composeNavigation = "2.8.5"
 
 hilt = "2.49"
 hiltAndroidGradlePlugin = "2.52"

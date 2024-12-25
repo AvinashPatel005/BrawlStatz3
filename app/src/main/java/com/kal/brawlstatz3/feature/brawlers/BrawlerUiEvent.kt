@@ -7,4 +7,5 @@ sealed class BrawlerUiEvent {
     data class InfoClicked(val info: NameDescription) : BrawlerUiEvent()
     data object SearchToggled : BrawlerUiEvent()
     data class SearchQueryChanged(val query: String) : BrawlerUiEvent()
+    data class FilterToggled(val filter:Int) : BrawlerUiEvent()
 }

@@ -36,6 +36,19 @@ class BrawlersViewModel @Inject constructor(
     var isSearchActive = mutableStateOf(false)
     var searchQuery = mutableStateOf("")
 
+    val filterList = listOf(
+        "All",
+        "New",
+        "Traits",
+        "Legendary",
+        "Mythic",
+        "Epic",
+        "Super Rare",
+        "Rare",
+        "Starting"
+    )
+    val filter = mutableIntStateOf(0)
+
     init {
         getTraits()
         getBrawlerList()
@@ -86,9 +99,16 @@ class BrawlersViewModel @Inject constructor(
 
             is BrawlerUiEvent.SearchQueryChanged -> {
                 searchQuery.value = event.query
+                filter.intValue=0
                 search(searchQuery.value)
             }
-
+            is BrawlerUiEvent.FilterToggled ->{
+                if (filter.intValue == event.filter)
+                    filter.intValue = 0
+                else
+                    filter.intValue = event.filter
+                handleFilter(filter.intValue)
+            }
             is BrawlerUiEvent.SearchToggled -> {
                 if (isSearchActive.value){
                     if (searchQuery.value.isNotEmpty()){
@@ -151,10 +171,29 @@ class BrawlersViewModel @Inject constructor(
         }
     }
 
-    fun search(name: String) {
-        if (name.isEmpty())
+    private fun search(feed: String) {
+        if (feed.isEmpty())
             brawlerlist.addAll(mainBrawlerList)
         brawlerlist.clear()
-        brawlerlist.addAll(mainBrawlerList.filter { it.name.startsWith(name, true) })
+        brawlerlist.addAll(mainBrawlerList.filter { it.id.toString().startsWith(feed, true) || it.name.startsWith(feed, true) ||it.rarity.startsWith(feed, true)  })
+
+    }
+    private fun handleFilter(filter:Int) {
+        brawlerlist.clear()
+        when (filter) {
+            0 -> brawlerlist.addAll(mainBrawlerList)
+            1 -> {
+                brawlerlist.addAll(mainBrawlerList.sortedBy { brawler -> -brawler.id })
+            }
+            2 -> {
+                brawlerlist.addAll(mainBrawlerList.filter{ brawler -> brawler.trait!=null})
+            }
+            else -> brawlerlist.addAll(mainBrawlerList.filter {
+                it.rarity.startsWith(
+                    filterList[filter],
+                    true
+                )
+            })
+        }
     }
 }

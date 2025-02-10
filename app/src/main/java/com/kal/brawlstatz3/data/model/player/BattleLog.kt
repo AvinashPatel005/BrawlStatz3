@@ -6,6 +6,7 @@ import kotlinx.serialization.Serializable
 data class BattleLog(
     val icon: String,
     val mode: String,
+    val brawler:String,
     val result: Int,
     val time: String,
     val trophy: String

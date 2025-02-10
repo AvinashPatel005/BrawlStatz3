@@ -106,7 +106,7 @@ class MainActivity : ComponentActivity() {
                                 MetaScreen(brawlersViewModel = brawlerViewModel)
                             }
                             composable<Screen.Profile> {
-                                ProfileScreen(profileViewModel = profileViewModel)
+                                ProfileScreen(profileViewModel = profileViewModel,brawlerList = brawlerViewModel.brawlerlist)
                             }
                         }
                     }

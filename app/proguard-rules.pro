@@ -24,8 +24,14 @@
 -keep class com.kal.brawlstatz3.data.model.club.* {*;}
 -keep class com.kal.brawlstatz3.data.model.event.* {*;}
 -keep class com.kal.brawlstatz3.data.model.player.* {*;}
-
+-keep class com.kal.brawlstatz3.data.model.AppState {*;}
 #navigation classes
 -keep public class com.kal.brawlstatz3.util.Screen {*;}
 -keepclassmembers class com.kal.brawlstatz3.util.Screen {*;}
 -keep public class com.kal.brawlstatz3.** implements com.kal.brawlstatz3.util.Screen {*;}
+-keep class com.kal.brawlstatz3.util.** { *; }
+
+# Keep generic type info for Gson
+-keepattributes Signature
+-keep class com.google.gson.reflect.TypeToken { *; }
+

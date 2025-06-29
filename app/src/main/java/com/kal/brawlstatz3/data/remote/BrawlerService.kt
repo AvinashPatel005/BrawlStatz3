@@ -2,6 +2,7 @@ package com.kal.brawlstatz3.data.remote
 
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.toObject
+import com.kal.brawlstatz3.data.model.AppState
 import com.kal.brawlstatz3.data.model.brawler.Brawler
 import com.kal.brawlstatz3.util.Response
 import kotlinx.coroutines.channels.awaitClose
@@ -22,8 +23,17 @@ class BrawlerService @Inject constructor(
             val response = if (value != null) {
                 for (doc in value) {
                     val brawler = doc.toObject<Brawler>()
-                    brawlersMap[brawler.id] = brawler
-                    brawlers.add(brawler)
+                    if(brawler.disabled==null){
+                        brawlersMap[brawler.id] = brawler
+                        brawlers.add(brawler)
+                    }
+                    else{
+                        if(brawler.disabled==false){
+                            brawlersMap[brawler.id] = brawler
+                            brawlers.add(brawler)
+                        }
+                    }
+
                 }
                 Response.Success(brawlersMap)
             } else {
@@ -41,6 +51,14 @@ class BrawlerService @Inject constructor(
         try {
             val res = othersReference.document("traits").get().await()
             return Response.Success(res.data)
+        } catch (e: Exception) {
+            return Response.Failure(e = e)
+        }
+    }
+    suspend fun getAppState():Response<AppState?> {
+        try {
+            val res = othersReference.document("app").get().await()
+            return Response.Success(res.toObject<AppState>())
         } catch (e: Exception) {
             return Response.Failure(e = e)
         }

@@ -1,11 +1,14 @@
 package com.kal.brawlstatz3.feature.brawlers.viewmodel
 
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.kal.brawlstatz3.BuildConfig
+import com.kal.brawlstatz3.data.model.AppState
 import com.kal.brawlstatz3.data.model.brawler.Brawler
 import com.kal.brawlstatz3.data.model.brawler.NameDescription
 import com.kal.brawlstatz3.data.repository.BrawlerRepository
@@ -30,16 +33,23 @@ class BrawlersViewModel @Inject constructor(
     var brawlerMap = mapOf<Int, Brawler>()
     var info = mutableStateOf(NameDescription())
 
+    var appState = mutableStateOf(AppState())
+
     var sortedMetaList:ArrayList<Brawler> = ArrayList()
     var metaList = mutableStateListOf<Tier>()
 
     var isSearchActive = mutableStateOf(false)
     var searchQuery = mutableStateOf("")
 
+    var isUpdateAvailable = mutableStateOf(false)
+    var isUpdateDownloading = mutableLongStateOf(0L)
+    var isBottomSheetVisible = mutableStateOf(false)
+
     val filterList = listOf(
         "All",
         "New",
         "Traits",
+        "Ultra Legendary",
         "Legendary",
         "Mythic",
         "Epic",
@@ -52,10 +62,12 @@ class BrawlersViewModel @Inject constructor(
     init {
         getTraits()
         getBrawlerList()
+        getAppState()
     }
     fun getMetaList() {
         val list :ArrayList<Tier> = ArrayList()
         sortedMetaList.clear()
+        metaList.clear()
         sortedMetaList.addAll(mainBrawlerList.sortedBy { it.tier[0] })
         val sTier: ArrayList<Brawler> = ArrayList()
         val aTier: ArrayList<Brawler> = ArrayList()
@@ -166,6 +178,25 @@ class BrawlersViewModel @Inject constructor(
 
                 is Response.Success -> {
                     traits = response.data!!
+                }
+            }
+        }
+    }
+    private fun getAppState() = viewModelScope.launch {
+        repository.getAppState().let { response ->
+            when (response) {
+                is Response.Failure -> {
+                    errorLog.value = response.e?.message.toString()
+                }
+
+                is Response.Loading -> {
+
+                }
+
+                is Response.Success -> {
+                    appState.value = response.data!!
+                    isUpdateAvailable.value = appState.value.version.toFloat() > BuildConfig.VERSION_NAME.toFloat()
+                    isBottomSheetVisible.value= isUpdateAvailable.value
                 }
             }
         }

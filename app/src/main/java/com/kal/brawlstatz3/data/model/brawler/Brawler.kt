@@ -10,6 +10,7 @@ data class Brawler(
     val id: Int,
     val hypercharge: NameDescription?,
     val mastery: String,
+    val disabled: Boolean?,
     val model3d: String,
     val movementSpeed: String,
     val name: String,
@@ -24,7 +25,7 @@ data class Brawler(
         "",
         NameDescription(),
         NameDescription(),
-        BestBuild(), listOf(), listOf(), 0, null, "", "", "", "", "",
+        BestBuild(), listOf(), listOf(), 0, null, "",false, "", "", "", "",
         listOf(), listOf(), null, "", 0
     )
 }

@@ -9,3 +9,4 @@ sealed class BrawlerUiEvent {
     data class SearchQueryChanged(val query: String) : BrawlerUiEvent()
     data class FilterToggled(val filter:Int) : BrawlerUiEvent()
 }
+

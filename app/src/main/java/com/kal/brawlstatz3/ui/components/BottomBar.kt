@@ -27,12 +27,12 @@ fun BottomBar(currentRoute: String, onNavigate: (Screen) -> Unit, modifier: Modi
             icon = Icons.Outlined.Face,
             selectedIcon = Icons.Filled.Face
         ),
-        BottomNavItem(
-            name = "Events",
-            route = Screen.Events,
-            icon = Icons.Outlined.Notifications,
-            selectedIcon = Icons.Filled.Notifications
-        ),
+//        BottomNavItem(
+//            name = "Events",
+//            route = Screen.Events,
+//            icon = Icons.Outlined.Notifications,
+//            selectedIcon = Icons.Filled.Notifications
+//        ),
         BottomNavItem(
             name = "Meta",
             route = Screen.Meta,

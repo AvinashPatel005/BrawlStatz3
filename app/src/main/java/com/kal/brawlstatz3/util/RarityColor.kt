@@ -6,14 +6,16 @@ import com.kal.brawlstatz3.ui.theme.legendary
 import com.kal.brawlstatz3.ui.theme.mythic
 import com.kal.brawlstatz3.ui.theme.rare
 import com.kal.brawlstatz3.ui.theme.starting
-import com.kal.brawlstatz3.ui.theme.superrare
+import com.kal.brawlstatz3.ui.theme.super_rare
+import com.kal.brawlstatz3.ui.theme.ultra_legendary
 
 fun getRarityColor(rarity: String): Color {
     return when (rarity) {
+        "ULTRA LEGENDARY" -> ultra_legendary
         "LEGENDARY" -> legendary
         "MYTHIC" -> mythic
         "EPIC" -> epic
-        "SUPER RARE" -> superrare
+        "SUPER RARE" -> super_rare
         "RARE" -> rare
         "STARTING" -> starting
         else -> {

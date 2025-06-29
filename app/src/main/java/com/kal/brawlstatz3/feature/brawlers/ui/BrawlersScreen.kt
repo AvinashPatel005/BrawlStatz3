@@ -40,6 +40,7 @@ import com.kal.brawlstatz3.R
 import com.kal.brawlstatz3.feature.brawlers.BrawlerUiEvent
 import com.kal.brawlstatz3.feature.brawlers.ui.components.BrawlerCard
 import com.kal.brawlstatz3.feature.brawlers.viewmodel.BrawlersViewModel
+import com.kal.brawlstatz3.util.LoadingBar
 
 @Composable
 fun BrawlersScreen(brawlersViewModel: BrawlersViewModel,modifier: Modifier = Modifier) {
@@ -49,7 +50,7 @@ fun BrawlersScreen(brawlersViewModel: BrawlersViewModel,modifier: Modifier = Mod
                 contentAlignment = Alignment.Center,
                 modifier = Modifier.fillMaxSize()
             ) {
-                CircularProgressIndicator()
+                LoadingBar()
             }
         }
         else{

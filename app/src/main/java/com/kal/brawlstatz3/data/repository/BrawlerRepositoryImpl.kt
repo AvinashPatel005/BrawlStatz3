@@ -1,5 +1,6 @@
 package com.kal.brawlstatz3.data.repository
 
+import com.kal.brawlstatz3.data.model.AppState
 import com.kal.brawlstatz3.data.model.brawler.Brawler
 import com.kal.brawlstatz3.data.remote.BrawlerService
 import com.kal.brawlstatz3.util.Response
@@ -15,5 +16,9 @@ class BrawlerRepositoryImpl @Inject constructor(
 
     override suspend fun getTraitList(): Response<MutableMap<String, Any>?> {
         return brawlerService.getTraitList()
+    }
+
+    override suspend fun getAppState(): Response<AppState?> {
+        return brawlerService.getAppState()
     }
 }

@@ -8,9 +8,12 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.text.font.FontWeight
 import com.kal.brawlstatz3.feature.brawlers.ui.BrawlersTopBar
 import com.kal.brawlstatz3.feature.brawlers.viewmodel.BrawlersViewModel
 import com.kal.brawlstatz3.feature.events.viewmodel.EventsViewModel
+import com.kal.brawlstatz3.feature.meta.ui.MetaTopBar
+import com.kal.brawlstatz3.feature.profile.ui.ProfileTopBar
 import com.kal.brawlstatz3.feature.profile.viewmodel.ProfileViewModel
 import com.kal.brawlstatz3.util.Screen
 
@@ -18,14 +21,12 @@ import com.kal.brawlstatz3.util.Screen
 @Composable
 fun AppTopBar(
     brawlersViewModel: BrawlersViewModel,
-    eventsViewModel: EventsViewModel,
     profileViewModel: ProfileViewModel,
-    currentRoute: String,
-    onDrawerClicked: () -> Unit
+    currentRoute: String
 ) {
     TopAppBar(
         title = {
-            Text("BrawlStatZ")
+            Text("Brawlstatz", fontWeight = FontWeight.Bold)
         },
         actions = {
             if (currentRoute == Screen.Brawlers::class.qualifiedName) {
@@ -35,21 +36,13 @@ fun AppTopBar(
                     onEvent =  brawlersViewModel::onEvent)
             }
             if (currentRoute == Screen.Events::class.qualifiedName) {
-                Text(text = "Events")
             }
             if (currentRoute == Screen.Meta::class.qualifiedName) {
-                Text(text = "Meta")
+                MetaTopBar(version = brawlersViewModel.appState.value.meta)
             }
             if (currentRoute == Screen.Profile::class.qualifiedName) {
-                Text(text = "Profile")
+                ProfileTopBar(onSettingClick =  profileViewModel::onEvent)
             }
         },
-        navigationIcon = {
-            IconButton(onClick = {
-                onDrawerClicked()
-            }) {
-                Icon(imageVector = Icons.Default.Menu, contentDescription = null)
-            }
-        }
     )
 }

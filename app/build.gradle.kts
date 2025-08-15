@@ -16,8 +16,8 @@ android {
         applicationId = "com.kal.brawlstatz3"
         minSdk = 26
         targetSdk = 36
-        versionCode = 15
-        versionName = "1.3"
+        versionCode = 18
+        versionName = "1.45"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -33,6 +33,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
     compileOptions {

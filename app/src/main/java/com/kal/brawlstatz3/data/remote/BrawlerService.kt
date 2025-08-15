@@ -28,7 +28,7 @@ class BrawlerService @Inject constructor(
                         brawlers.add(brawler)
                     }
                     else{
-                        if(brawler.disabled==false){
+                        if(!brawler.disabled){
                             brawlersMap[brawler.id] = brawler
                             brawlers.add(brawler)
                         }

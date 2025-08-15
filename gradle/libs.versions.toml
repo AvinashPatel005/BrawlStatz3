@@ -6,6 +6,7 @@ coreKtx = "1.15.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
+ktorClientMockVersion = "3.2.3"
 lifecycleRuntimeKtx = "2.8.7"
 activityCompose = "1.10.0"
 composeBom = "2025.02.00"
@@ -29,11 +30,12 @@ kotlinxCoroutinesCore = "1.8.1"
 kotlinxSerializationJson = "1.7.1"
 
 glide = "1.0.0-beta01"
+materialIconsExtended = "jar"
 sceneview = "2.2.1"
 
 
 
-ktor = "2.3.12"
+ktor = "3.2.3"
 firebaseMessaging = "24.1.2"
 
 
@@ -45,6 +47,7 @@ firebaseMessaging = "24.1.2"
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleRuntimeKtx" }
 
+androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "materialIconsExtended" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
@@ -67,6 +70,7 @@ firebase-messaging-ktx = { group = "com.google.firebase", name = "firebase-messa
 
 
 core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "coreSplashscreen" }
+ktor-ktor-client-mock = { module = "io.ktor:ktor-client-mock", version.ref = "ktorClientMockVersion" }
 navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "composeNavigation" }
 
 

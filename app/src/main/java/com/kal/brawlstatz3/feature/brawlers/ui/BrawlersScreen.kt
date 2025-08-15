@@ -60,13 +60,13 @@ fun BrawlersScreen(brawlersViewModel: BrawlersViewModel,modifier: Modifier = Mod
                     LazyRow(
                         modifier = Modifier
                             .background(MaterialTheme.colorScheme.background)
-                            .height(40.dp)
+                            .height(35.dp)
                     ) {
                         itemsIndexed(brawlersViewModel.filterList) {index,filter  ->
                             Spacer(modifier = Modifier.width(8.dp))
                             Button(
                                 modifier =
-                                    Modifier.height(35.dp),
+                                    Modifier.height(30.dp),
                                 onClick = {
                                     brawlersViewModel.onEvent(BrawlerUiEvent.FilterToggled(index))
                                 },
@@ -76,10 +76,11 @@ fun BrawlersScreen(brawlersViewModel: BrawlersViewModel,modifier: Modifier = Mod
                                     MaterialTheme.colorScheme.primary
                                 ),
                                 shape = RoundedCornerShape(8.dp),
-                                contentPadding = PaddingValues(8.dp)
+                                contentPadding = PaddingValues(horizontal = 8.dp, vertical = 0.dp)
                             ) {
                                 Text(
                                     text = filter,
+                                    fontSize = 14.sp,
                                     color = if (index == brawlersViewModel.filter.intValue) MaterialTheme.colorScheme.onPrimaryContainer
                                     else MaterialTheme.colorScheme.onPrimary,
                                     fontWeight = FontWeight.Bold

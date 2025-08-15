@@ -70,7 +70,7 @@ fun BrawlerCard(
     var componentWidth by remember { mutableStateOf(0.dp) }
     val density = LocalDensity.current
     Card(
-        border = BorderStroke(2.dp, getRarityColor(brawler.rarity)),
+        border = BorderStroke(1.dp, getRarityColor(brawler.rarity)),
         modifier = modifier
             .fillMaxWidth()
             .padding(8.dp, 2.dp)
@@ -90,7 +90,7 @@ fun BrawlerCard(
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically, modifier = Modifier
-                .padding(6.dp)
+                .padding(horizontal = 6.dp, vertical = 4.dp)
                 .fillMaxWidth()
                 .height(if (isExpanded) 100.dp else 80.dp)
         ) {

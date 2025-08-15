@@ -2,6 +2,7 @@ package com.kal.brawlstatz3.feature.brawlers.ui.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -38,7 +39,7 @@ fun MoveDescription(
     active: Boolean,
     onClick: () -> Unit
 ) {
-    Box {
+    Box( contentAlignment = Alignment.BottomStart) {
         Box(
             modifier = Modifier.height(35.dp),
             contentAlignment = Alignment.BottomStart
@@ -62,27 +63,28 @@ fun MoveDescription(
         }
         Column(
             modifier = Modifier
-                .height(35.dp)
-                .padding(start = 43.dp),
+                .padding(start = 45.dp),
         ) {
             Text(
                 header,
+
                 fontSize = 12.sp,
+                lineHeight = 12.sp,
                 color = headerColor,
                 fontFamily = balooFamily,
                 fontWeight = FontWeight.ExtraBold,
                 style = TextStyle(
-                    shadow = Shadow(offset = Offset(1f, 1f), blurRadius = 1f)
+                    shadow = Shadow(offset = Offset(1f, 1f), blurRadius = 1f),
+                    lineHeight = 1.sp
                 )
             )
             Text(
                 value.uppercase(),
                 fontSize = 14.sp,
+                lineHeight = 12.sp,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 fontWeight = FontWeight.Bold,
-
                 style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.offset(y = (-4).dp)
             )
         }
         Image(

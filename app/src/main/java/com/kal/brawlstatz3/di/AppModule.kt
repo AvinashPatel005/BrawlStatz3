@@ -1,5 +1,6 @@
 package com.kal.brawlstatz3.di
 
+import MockBrawlRepository
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -76,7 +77,7 @@ class AppModule {
     @Provides
     @Singleton
     fun provideMyBrawlRepository(myBrawlApiService: MyBrawlApiService): MyBrawlRepository {
-        return MyBrawlRepositoryImpl(myBrawlApiService)
+        return MockBrawlRepository()
     }
 
 

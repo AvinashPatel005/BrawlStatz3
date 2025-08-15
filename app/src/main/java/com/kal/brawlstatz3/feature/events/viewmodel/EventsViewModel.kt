@@ -22,12 +22,10 @@ class EventsViewModel @Inject constructor(
     var upcomingMaps = mutableStateListOf<Active>()
 
     init {
-        getEvents()
     }
 
     private fun getEvents() = viewModelScope.launch {
         isLoading.value = true
-        println("Fetching Events")
         myBrawlRepository.getEvent().let { response ->
             when (response) {
                 is Response.Failure -> {

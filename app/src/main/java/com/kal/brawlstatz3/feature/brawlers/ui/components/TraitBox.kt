@@ -1,6 +1,7 @@
 package com.kal.brawlstatz3.feature.brawlers.ui.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
@@ -44,7 +45,7 @@ fun TraitBox(traitURL: String, traitText: String, isExpanded: Boolean) {
                 )
                 .padding(1.dp)
         )
-        Spacer(modifier = Modifier.width(2.dp))
+        Spacer(modifier = Modifier.width(4.dp))
         if (isExpanded) {
             Text(
                 text = traitText,
@@ -53,9 +54,6 @@ fun TraitBox(traitURL: String, traitText: String, isExpanded: Boolean) {
                 fontSize = 10.sp,
                 lineHeight = 10.sp,
                 modifier = Modifier
-                    .clip(
-                        RoundedCornerShape(8.dp)
-                    )
                     .defaultMinSize(minHeight = 20.dp)
                     .wrapContentHeight(align = Alignment.CenterVertically)
             )

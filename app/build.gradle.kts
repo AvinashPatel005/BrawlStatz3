@@ -9,21 +9,13 @@ plugins {
 }
 
 android {
-    signingConfigs {
-        create("release") {
-            storeFile = file("C:\\Users\\awina\\OneDrive\\Documents\\Android Studio\\key.jks")
-            storePassword = "ak47.0440"
-            keyPassword = "ak47.0440"
-            keyAlias = "key0"
-        }
-    }
     namespace = "com.kal.brawlstatz3"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.kal.brawlstatz3"
         minSdk = 26
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 15
         versionName = "1.3"
 
@@ -41,7 +33,6 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            signingConfig = signingConfigs.getByName("release")
         }
     }
     compileOptions {
@@ -111,6 +102,10 @@ dependencies {
     implementation(libs.ktor.client.okhttp)
     implementation(libs.ktor.client.content.negotiation)
     implementation(libs.ktor.serialization.kotlinx.json)
+    testImplementation(libs.ktor.ktor.client.mock)
+    debugImplementation(libs.ktor.ktor.client.mock)
+
+    implementation(libs.androidx.material.icons.extended)
 
     implementation(libs.gson)
 }

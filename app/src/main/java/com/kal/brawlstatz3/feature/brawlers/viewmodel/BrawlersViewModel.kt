@@ -41,10 +41,6 @@ class BrawlersViewModel @Inject constructor(
     var isSearchActive = mutableStateOf(false)
     var searchQuery = mutableStateOf("")
 
-    var isUpdateAvailable = mutableStateOf(false)
-    var isUpdateDownloading = mutableLongStateOf(0L)
-    var isBottomSheetVisible = mutableStateOf(false)
-
     val filterList = listOf(
         "All",
         "New",
@@ -195,8 +191,6 @@ class BrawlersViewModel @Inject constructor(
 
                 is Response.Success -> {
                     appState.value = response.data!!
-                    isUpdateAvailable.value = appState.value.version.toFloat() > BuildConfig.VERSION_NAME.toFloat()
-                    isBottomSheetVisible.value= isUpdateAvailable.value
                 }
             }
         }

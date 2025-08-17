@@ -4,8 +4,11 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Bolt
@@ -59,7 +62,8 @@ fun BottomBar(currentRoute: String, onNavigate: (Screen) -> Unit, modifier: Modi
         )
 
     )
-    Row (modifier= Modifier.background(MaterialTheme.colorScheme.surfaceContainer).padding(bottom = 8.dp), verticalAlignment = Alignment.Bottom) {
+    Row (modifier= Modifier.background(MaterialTheme.colorScheme.surfaceContainer).windowInsetsPadding(
+        WindowInsets.navigationBars), verticalAlignment = Alignment.Bottom) {
         bottomNavigationItems.forEach { item ->
             val selected = item.route::class.qualifiedName == currentRoute
             NavigationBarItem(

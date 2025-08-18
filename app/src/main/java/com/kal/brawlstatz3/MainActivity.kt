@@ -16,6 +16,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.google.firebase.Firebase
+import com.google.firebase.appcheck.appCheck
+import com.google.firebase.appcheck.playintegrity.PlayIntegrityAppCheckProviderFactory
+import com.google.firebase.initialize
 import com.kal.brawlstatz3.feature.brawlers.ui.BrawlersScreen
 import com.kal.brawlstatz3.feature.brawlers.viewmodel.BrawlersViewModel
 import com.kal.brawlstatz3.feature.meta.ui.MetaScreen
@@ -35,6 +39,10 @@ class MainActivity : ComponentActivity() {
         installSplashScreen()
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        Firebase.initialize(context = this)
+        Firebase.appCheck.installAppCheckProviderFactory(
+            PlayIntegrityAppCheckProviderFactory.getInstance(),
+        )
         setContent {
             BrawlStatZTheme {
                 val brawlerViewModel = hiltViewModel<BrawlersViewModel>()

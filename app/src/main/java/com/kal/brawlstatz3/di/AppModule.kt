@@ -1,8 +1,8 @@
 package com.kal.brawlstatz3.di
 
+import com.google.firebase.Firebase
 import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.firestore.firestore
 import com.kal.brawlstatz3.data.remote.BrawlerService
 import com.kal.brawlstatz3.data.remote.MyBrawlApiService
 import com.kal.brawlstatz3.data.repository.BrawlerRepository

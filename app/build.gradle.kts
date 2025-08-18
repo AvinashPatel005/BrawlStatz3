@@ -16,8 +16,8 @@ android {
         applicationId = "com.kal.brawlstatz3"
         minSdk = 26
         targetSdk = 36
-        versionCode = 18
-        versionName = "1.45"
+        versionCode = 21
+        versionName = "1.48"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -86,6 +86,8 @@ dependencies {
     implementation(libs.firebase.storage.ktx)
     implementation(libs.firebase.firestore.ktx)
     implementation(libs.firebase.messaging.ktx)
+    implementation(libs.firebase.appcheck.playintegrity)
+    implementation(libs.firebase.appcheck.debug)
 
     implementation(libs.kotlinx.serialization.json)
 

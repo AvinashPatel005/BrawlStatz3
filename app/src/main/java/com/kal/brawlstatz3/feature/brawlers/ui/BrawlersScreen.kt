@@ -104,7 +104,7 @@ fun BrawlersScreen(brawlersViewModel: BrawlersViewModel,modifier: Modifier = Mod
                     )
                 }
                 item{
-                    Text(text = "Copyright © TeamDiversity", textAlign = TextAlign.Center, modifier = Modifier
+                    Text(text = "Copyright © ATeamDiversity", textAlign = TextAlign.Center, modifier = Modifier
                         .alpha(0.5f)
                         .fillMaxWidth()
                         .height(220.dp), fontSize = 14.sp)

@@ -1,15 +1,50 @@
 package com.kal.brawlstatz3
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredWidth
+import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Share
+import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalDrawerSheet
+import androidx.compose.material3.ModalNavigationDrawer
+import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
@@ -18,6 +53,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.google.firebase.Firebase
 import com.google.firebase.appcheck.appCheck
+import com.google.firebase.appcheck.debug.DebugAppCheckProviderFactory
 import com.google.firebase.appcheck.playintegrity.PlayIntegrityAppCheckProviderFactory
 import com.google.firebase.initialize
 import com.kal.brawlstatz3.feature.brawlers.ui.BrawlersScreen
@@ -28,9 +64,20 @@ import com.kal.brawlstatz3.feature.profile.viewmodel.ProfileViewModel
 import com.kal.brawlstatz3.ui.components.AppTopBar
 import com.kal.brawlstatz3.ui.components.BottomBar
 import com.kal.brawlstatz3.ui.components.NotificationPermissionSheet
+import com.kal.brawlstatz3.ui.theme.AppTheme
 import com.kal.brawlstatz3.ui.theme.BrawlStatZTheme
 import com.kal.brawlstatz3.util.Screen
+import com.kal.brawlstatz3.util.ThemePrefs
 import dagger.hilt.android.AndroidEntryPoint
+import com.kal.brawlstatz3.feature.about.AboutAppScreen
+import com.kal.brawlstatz3.feature.settings.SettingScreen
+import com.kal.brawlstatz3.feature.updates.ui.UpdateScreen
+import com.kal.brawlstatz3.ui.components.shouldShowBottomBar
+import com.kal.brawlstatz3.util.appReset
+import com.kal.brawlstatz3.util.getActiveAlias
+import com.kal.brawlstatz3.util.rightBorder
+import com.kal.brawlstatz3.util.switchIcon
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -41,72 +88,209 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         Firebase.initialize(context = this)
         Firebase.appCheck.installAppCheckProviderFactory(
-            PlayIntegrityAppCheckProviderFactory.getInstance(),
+            if (BuildConfig.DEBUG) {
+                DebugAppCheckProviderFactory.getInstance()
+            } else {
+                PlayIntegrityAppCheckProviderFactory.getInstance()
+            }
         )
         setContent {
-            BrawlStatZTheme {
+            var currentTheme by remember { mutableStateOf(ThemePrefs(this).getTheme()) }
+            BrawlStatZTheme(currentTheme) {
                 val brawlerViewModel = hiltViewModel<BrawlersViewModel>()
                 val profileViewModel = hiltViewModel<ProfileViewModel>()
 //                val eventsViewModel = hiltViewModel<EventsViewModel>()
                 val navController = rememberNavController()
 
+                val context = LocalContext.current
+
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 val currentRoute = navBackStackEntry?.destination?.route?: Screen.Brawlers::class.qualifiedName.orEmpty()
 
-                Scaffold(
-                    topBar = {
-                        AppTopBar(
-                            brawlersViewModel = brawlerViewModel,
-                            profileViewModel = profileViewModel,
-                            currentRoute = currentRoute
-                        )
+                val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+                val scope = rememberCoroutineScope()
+                ModalNavigationDrawer(
+                    drawerContent = {
+                        ModalDrawerSheet(
+                            drawerShape = RectangleShape,
+                            modifier = Modifier.shadow(10.dp).rightBorder(MaterialTheme.colorScheme.primary,8f),
+                            drawerTonalElevation = 2.dp
+                        ) {
+
+
+                            Box(
+                                modifier = Modifier.fillMaxHeight().requiredWidth(250.dp)
+                            ){
+                                Column (modifier = Modifier.padding(12.dp)){
+                                Row (verticalAlignment = Alignment.CenterVertically){
+                                    Image(painter = painterResource(R.drawable.logo_icon), contentDescription = null, modifier = Modifier.width(56.dp))
+                                    Text(text = "Brawlstatz", fontWeight = FontWeight.Bold, style = MaterialTheme.typography.titleLarge)
+
+                                }
+                                    Spacer(modifier = Modifier.height(20.dp))
+                                    Text("App", style = MaterialTheme.typography.labelLarge, modifier = Modifier.padding(start = 10.dp, bottom = 4.dp))
+                                    NavigationDrawerItem(
+                                        label = { Text("News") },
+                                        selected = false,
+                                        icon = { Icon(Icons.Filled.Notifications, contentDescription = null) },
+                                        onClick = {
+                                            scope.launch {
+                                                drawerState.close()
+                                            }
+                                            navController.navigate(Screen.News)
+                                        }
+                                    )
+//                                    NavigationDrawerItem(
+//                                        label = { Text("Downloads") },
+//                                        selected = false,
+//                                        icon = { Icon(Icons.Filled.Download, contentDescription = null) },
+//                                        onClick = {  }
+//                                    )
+                                    NavigationDrawerItem(
+                                        label = { Text("Settings") },
+                                        selected = false,
+                                        icon = { Icon(Icons.Filled.Settings, contentDescription = null) },
+                                        onClick = {
+                                            scope.launch {
+                                                drawerState.close()
+                                            }
+                                            navController.navigate(Screen.Settings)
+                                        }
+                                    )
+                                    Text("About", style = MaterialTheme.typography.labelLarge, modifier = Modifier.padding(start = 10.dp, top = 16.dp, bottom = 4.dp))
+                                    val context = LocalContext.current
+                                    val playStoreLink = "https://play.google.com/store/apps/details?id=$packageName"
+
+                                    val shareMessage = """
+                                                        Hey! 👋
+                                                        Check out this awesome app, Brawlstatz
+                                                        Download it here: $playStoreLink
+                                                    """.trimIndent()
+                                    NavigationDrawerItem(
+                                        label = { Text("Share") },
+                                        selected = false,
+                                        icon = { Icon(Icons.Filled.Share, contentDescription = null) },
+                                        onClick = {
+                                            val sendIntent = Intent().apply {
+                                                action = Intent.ACTION_SEND
+                                                putExtra(Intent.EXTRA_TEXT, shareMessage)
+                                                type = "text/plain"
+                                            }
+
+                                            val shareIntent = Intent.createChooser(sendIntent, "Share")
+                                            context.startActivity(shareIntent)
+                                        }
+                                    )
+                                    NavigationDrawerItem(
+                                        label = { Text("About us") },
+                                        selected = false,
+                                        icon = { Icon(Icons.Filled.Info, contentDescription = null) },
+                                        onClick = {
+                                            scope.launch {
+                                                drawerState.close()
+                                            }
+                                            navController.navigate(Screen.About){
+                                                launchSingleTop = true
+                                            }
+                                        }
+                                    )
+                                }
+                                Text("Copyright © ATeamDiversity", fontSize = 10.sp, modifier = Modifier.align(
+                                    Alignment.BottomCenter))
+                            }
+                        }
                     },
-                    bottomBar = {
-                        BottomBar(
-                            currentRoute = currentRoute,
-                            onNavigate = { route ->
-                                if (route::class.qualifiedName != currentRoute) {
-                                    navController.navigate(route) {
+                    drawerState = drawerState
+                ) {
+
+
+                    Scaffold(
+                        topBar = {
+                            AppTopBar(
+                                brawlersViewModel = brawlerViewModel,
+                                profileViewModel = profileViewModel,
+                                currentRoute = currentRoute,
+                                onDrawerClick = {
+                                    scope.launch {
+                                        if (drawerState.isClosed) {
+                                            drawerState.open()
+                                        } else {
+                                            drawerState.close()
+                                        }
+                                    }
+                                },
+                                onHomePress = {
+                                    navController.navigate(Screen.Brawlers){
                                         launchSingleTop = true
                                         popUpTo(Screen.Brawlers::class.qualifiedName.orEmpty())
                                     }
                                 }
-                            })
-                    },
-                    modifier = Modifier
-                        .fillMaxSize()
+                            )
+                        },
+                        bottomBar = {
+                            if(shouldShowBottomBar(currentRoute)){
+                                BottomBar(
+                                    currentRoute = currentRoute,
+                                    onNavigate = { route ->
+                                        if (route::class.qualifiedName != currentRoute) {
+                                            navController.navigate(route) {
+                                                launchSingleTop = true
+                                                popUpTo(Screen.Brawlers::class.qualifiedName.orEmpty())
+                                            }
+                                        }
+                                    })
+                            }
+                        },
+                        modifier = Modifier
+                            .fillMaxSize()
 
-                ) { innerPadding ->
-                    NavHost(
-                        navController = navController,
-                        startDestination = Screen.Brawlers,
-                        modifier = Modifier.padding(innerPadding)
-                    ) {
-                        composable<Screen.Brawlers> {
-                            BrawlersScreen(brawlersViewModel = brawlerViewModel)
-                        }
+                    ) { innerPadding ->
+                        NavHost(
+                            navController = navController,
+                            startDestination = Screen.Brawlers,
+                            modifier = Modifier.padding(innerPadding)
+                        ) {
+                            composable<Screen.Brawlers> {
+                                BrawlersScreen(brawlersViewModel = brawlerViewModel)
+                            }
 //                        composable<Screen.Events> {
 //                            EventsScreen(eventsViewModel = eventsViewModel)
 //                        }
-                        composable<Screen.Meta> {
-                            MetaScreen(brawlersViewModel = brawlerViewModel)
-                        }
-                        composable<Screen.Profile> {
-                            ProfileScreen(profileViewModel = profileViewModel,brawlerList = brawlerViewModel.brawlerlist)
-                        }
-                    }
-                    if(!brawlerViewModel.isLoading.value){
-                        NotificationPermissionSheet()
-                    }
+                            composable<Screen.Meta> {
+                                MetaScreen(brawlersViewModel = brawlerViewModel)
+                            }
+                            composable<Screen.Profile> {
+                                ProfileScreen(
+                                    profileViewModel = profileViewModel,
+                                    brawlerList = brawlerViewModel.brawlerlist
+                                )
+                            }
+                            composable<Screen.About> {
+                                AboutAppScreen()
+                            }
+                            composable<Screen.Settings> {
 
+                                SettingScreen(currentTheme=currentTheme, onThemeChange = { i->
+                                    ThemePrefs(context).saveTheme(AppTheme.entries[i])
+                                    currentTheme = AppTheme.entries[i]
+                                }, currentIcon = getActiveAlias(context) ,onIconChange = {
+                                    switchIcon(it,context)
+                                }, onClearData = {
+                                    appReset(context)
+                                })
+                            }
+                            composable<Screen.News> {
+                                UpdateScreen()
+                            }
+                        }
+                        if (!brawlerViewModel.isLoading.value) {
+                            NotificationPermissionSheet()
+                        }
+
+                    }
                 }
 
             }
         }
     }
 }
-
-
-
-
-

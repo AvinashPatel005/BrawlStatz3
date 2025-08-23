@@ -35,6 +35,7 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -42,6 +43,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
@@ -497,7 +499,9 @@ fun ProfileScreen(
     if (profileViewModel.isMenu.value) Dialog(onDismissRequest = {
         profileViewModel.onEvent(ProfileUiEvent.MenuDismiss)
     }) {
-        Card(modifier = Modifier.fillMaxWidth()) {
+        Card(
+            shape = RoundedCornerShape(16.dp),
+        ) {
             Column(modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)) {
@@ -572,83 +576,3 @@ fun ProfileScreen(
         }
     }
 }
-
-//Card(modifier=Modifier.fillMaxWidth()) {
-//    Column(modifier=Modifier.padding(14.dp)) {
-//        Text(text = "Add a Player", fontSize = 24.sp, fontWeight = FontWeight.Bold,modifier=Modifier.padding(vertical = 10.dp))
-//
-//
-//        Column(modifier=Modifier.fillMaxWidth().border(1.dp, MaterialTheme.colorScheme.surfaceDim,
-//            RoundedCornerShape(2.dp)).padding(10.dp)){
-//
-//            if(profileViewModel.tagList.isEmpty()){
-//                Text("Add a Player Tag!")
-//            }
-//            else{
-//                profileViewModel.tagList.forEachIndexed{i, tag->
-//                    Row (modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Absolute.SpaceBetween, verticalAlignment = Alignment.CenterVertically){
-//                        Text(tag)
-//                        if(profileViewModel.isDeleting.value){
-//                            IconButton(
-//                                onClick = {
-//                                    profileViewModel.onEvent(ProfileUiEvent.ItemDelete(tag = tag))
-//                                }
-//                            ) {
-//                                Icon(imageVector = Icons.Default.Close, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
-//                            }
-//                        }
-//                        else{
-//                            RadioButton(onClick = {
-//                                profileViewModel.onEvent(ProfileUiEvent.SelectTag(tag))
-//                            }, selected = profileViewModel.currentTag.value == tag)
-//                        }
-//                    }
-//                }
-//            }
-//            if (profileViewModel.isAdding.value) Row (modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically){
-//                TextField(
-//                    value = profileViewModel.inputTag.value,
-//                    placeholder = {
-//                        Text(text = "Enter Tag")
-//                    },
-//                    onValueChange = {
-//                        profileViewModel.onEvent(ProfileUiEvent.InputTagValueChanged(it))
-//                    },
-//                    modifier = Modifier.fillMaxWidth(0.8f)
-//                )
-//                IconButton(
-//                    onClick = {
-//                        profileViewModel.onEvent(ProfileUiEvent.ItemAdd)
-//                    }
-//                ) {
-//                    Icon(imageVector = Icons.Default.Check, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
-//                }
-//            }
-//
-//        }
-//        Spacer(modifier = Modifier.height(10.dp))
-//        Row (modifier=Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween){
-//            Row {
-//                IconButton(
-//                    onClick = {
-//                        profileViewModel.onEvent(ProfileUiEvent.AddClicked)
-//                    }
-//                ) {
-//                    Icon(imageVector = Icons.Default.Add, contentDescription = null)
-//                }
-//                IconButton(
-//                    onClick = {
-//                        profileViewModel.onEvent(ProfileUiEvent.DeleteClicked)
-//                    }
-//                ) {
-//                    Icon(imageVector = Icons.Default.Delete, contentDescription = null)
-//                }
-//            }
-//            Button (onClick = {
-//                profileViewModel.onEvent(ProfileUiEvent.MenuDismiss)
-//            }) {
-//                Text(text = "Done")
-//            }
-//        }
-//    }
-//}

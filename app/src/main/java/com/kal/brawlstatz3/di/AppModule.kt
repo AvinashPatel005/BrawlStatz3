@@ -5,10 +5,13 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.firestore
 import com.kal.brawlstatz3.data.remote.BrawlerService
 import com.kal.brawlstatz3.data.remote.MyBrawlApiService
+import com.kal.brawlstatz3.data.remote.NewsService
 import com.kal.brawlstatz3.data.repository.BrawlerRepository
 import com.kal.brawlstatz3.data.repository.BrawlerRepositoryImpl
 import com.kal.brawlstatz3.data.repository.MyBrawlRepository
 import com.kal.brawlstatz3.data.repository.MyBrawlRepositoryImpl
+import com.kal.brawlstatz3.data.repository.NewsRepository
+import com.kal.brawlstatz3.data.repository.NewsRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -32,6 +35,7 @@ class AppModule {
         return Firebase.firestore.collection("Brawlers")
     }
 
+
     @Provides
     @Singleton
     @Named("Others")
@@ -52,6 +56,27 @@ class AppModule {
     @Singleton
     fun provideBrawlerRepository(brawlerService: BrawlerService): BrawlerRepository {
         return BrawlerRepositoryImpl(brawlerService)
+    }
+
+    @Provides
+    @Singleton
+    @Named("News")
+    fun provideNewsReference(): CollectionReference {
+        return Firebase.firestore.collection("News")
+    }
+
+    @Provides
+    @Singleton
+    fun provideNewsService(
+        @Named("News") newsRef: CollectionReference,
+    ): NewsService {
+        return NewsService(newsRef)
+    }
+
+    @Provides
+    @Singleton
+    fun provideNewsRepository(newsService: NewsService): NewsRepository {
+        return NewsRepositoryImpl(newsService)
     }
 
     @Provides

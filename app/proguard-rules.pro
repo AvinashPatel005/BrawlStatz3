@@ -25,6 +25,7 @@
 -keep class com.kal.brawlstatz3.data.model.event.* {*;}
 -keep class com.kal.brawlstatz3.data.model.player.* {*;}
 -keep class com.kal.brawlstatz3.data.model.AppState {*;}
+-keep class com.kal.brawlstatz3.data.model.News {*;}
 #navigation classes
 -keep public class com.kal.brawlstatz3.util.Screen {*;}
 -keepclassmembers class com.kal.brawlstatz3.util.Screen {*;}

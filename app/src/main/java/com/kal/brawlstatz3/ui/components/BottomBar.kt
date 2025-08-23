@@ -5,9 +5,11 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.captionBar
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
@@ -20,6 +22,8 @@ import androidx.compose.material.icons.outlined.Bolt
 import androidx.compose.material.icons.outlined.Face
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Star
+import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -28,8 +32,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.dropShadow
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.kal.brawlstatz3.util.BottomNavItem
 import com.kal.brawlstatz3.util.Screen
 
@@ -62,6 +69,7 @@ fun BottomBar(currentRoute: String, onNavigate: (Screen) -> Unit, modifier: Modi
         )
 
     )
+
     Row (modifier= Modifier.background(MaterialTheme.colorScheme.surfaceContainer).windowInsetsPadding(
         WindowInsets.navigationBars), verticalAlignment = Alignment.Bottom) {
         bottomNavigationItems.forEach { item ->
@@ -73,15 +81,25 @@ fun BottomBar(currentRoute: String, onNavigate: (Screen) -> Unit, modifier: Modi
                 },
                 icon = {
                     if (selected) {
-                        Icon(imageVector = item.selectedIcon, contentDescription = null)
+                        Icon(imageVector = item.selectedIcon, contentDescription = null,modifier= Modifier.height(20.dp))
                     } else {
-                        Icon(imageVector = item.icon, contentDescription = null)
+                        Icon(imageVector = item.icon, contentDescription = null,modifier= Modifier.height(20.dp))
                     }
                 },
                 label = {
-                    Text(text = item.name)
-                }
+                    Text(text = item.name, fontSize = 12.sp)
+                },
             )
         }
+    }
+}
+
+fun shouldShowBottomBar(route: String?): Boolean {
+    return when (route) {
+        Screen.Brawlers::class.qualifiedName,
+        Screen.Profile::class.qualifiedName,
+        Screen.Meta::class.qualifiedName,
+        Screen.Events::class.qualifiedName,-> true
+        else -> false
     }
 }

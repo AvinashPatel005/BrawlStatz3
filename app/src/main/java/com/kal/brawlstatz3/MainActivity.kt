@@ -1,7 +1,9 @@
 package com.kal.brawlstatz3
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -31,6 +33,7 @@ import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -56,6 +59,7 @@ import com.google.firebase.appcheck.appCheck
 import com.google.firebase.appcheck.debug.DebugAppCheckProviderFactory
 import com.google.firebase.appcheck.playintegrity.PlayIntegrityAppCheckProviderFactory
 import com.google.firebase.initialize
+import com.google.firebase.messaging.FirebaseMessaging
 import com.kal.brawlstatz3.feature.brawlers.ui.BrawlersScreen
 import com.kal.brawlstatz3.feature.brawlers.viewmodel.BrawlersViewModel
 import com.kal.brawlstatz3.feature.meta.ui.MetaScreen
@@ -78,13 +82,47 @@ import com.kal.brawlstatz3.util.getActiveAlias
 import com.kal.brawlstatz3.util.rightBorder
 import com.kal.brawlstatz3.util.switchIcon
 import kotlinx.coroutines.launch
+import androidx.core.net.toUri
+import kotlinx.coroutines.flow.MutableSharedFlow
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    private val navEvents = MutableSharedFlow<Screen>(extraBufferCapacity = 1, replay = 1)
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        handleNotificationIntent(intent)
+    }
+    private fun handleNotificationIntent(intent: Intent?) {
+        val route = intent?.getStringExtra("route")
+        val url = intent?.getStringExtra("url")
+
+        when {
+            !route.isNullOrBlank() -> {
+                when (route) {
+                    "news" -> navEvents.tryEmit(Screen.News)
+                    "settings" -> navEvents.tryEmit(Screen.Settings)
+                    "about" -> navEvents.tryEmit(Screen.About)
+                    "events" -> navEvents.tryEmit(Screen.Events)
+                    "meta" -> navEvents.tryEmit(Screen.Meta)
+                    "profile" -> navEvents.tryEmit(Screen.Profile)
+                    else -> navEvents.tryEmit(Screen.News)
+                }
+            }
+            !url.isNullOrEmpty() -> {
+                startActivity(Intent(Intent.ACTION_VIEW, url.toUri()))
+            }
+        }
+    }
+    private fun isFromNotification(intent: Intent?): Boolean {
+        return intent?.extras?.containsKey("url") == true ||
+                intent?.extras?.containsKey("route") == true
+    }
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
+        if(isFromNotification(intent)) handleNotificationIntent(intent)
         enableEdgeToEdge()
         Firebase.initialize(context = this)
         Firebase.appCheck.installAppCheckProviderFactory(
@@ -96,11 +134,19 @@ class MainActivity : ComponentActivity() {
         )
         setContent {
             var currentTheme by remember { mutableStateOf(ThemePrefs(this).getTheme()) }
+            val navController = rememberNavController()
+            LaunchedEffect(Unit) {
+                navEvents.collect { route ->
+                    navController.navigate(route) {
+                        launchSingleTop = true
+                    }
+                }
+            }
             BrawlStatZTheme(currentTheme) {
                 val brawlerViewModel = hiltViewModel<BrawlersViewModel>()
                 val profileViewModel = hiltViewModel<ProfileViewModel>()
 //                val eventsViewModel = hiltViewModel<EventsViewModel>()
-                val navController = rememberNavController()
+
 
                 val context = LocalContext.current
 

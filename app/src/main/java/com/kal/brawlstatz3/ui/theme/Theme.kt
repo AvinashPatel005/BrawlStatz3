@@ -112,7 +112,7 @@ private val LightColorScheme = lightColorScheme(
     background = Color(0xFFF8F5FC),       // Very light lavender-gray
     onBackground = Color(0xFF1A1A1A),     // Dark text
 
-    surface = Color(0xFFFFFFFF),          // Default surface (nav bar, dialogs)
+    surface = Color(0xFFF8F5FC),          // Default surface (nav bar, dialogs)
     onSurface = Color(0xFF1A1A1A),        // Dark text/icons
 
     surfaceContainer = Color(0xFFF0E8F9), // BottomNav background

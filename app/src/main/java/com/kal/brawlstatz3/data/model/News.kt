@@ -7,7 +7,8 @@ data class News(
     val title: String,
     val description: String?,
     val date: Int,
-    val image: String?
+    val image: String?,
+    val link: String?
 ){
-    constructor() : this("","",null,0,null)
+    constructor() : this("","",null,0,null,null)
 }

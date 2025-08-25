@@ -29,21 +29,16 @@ class NewsViewModel @Inject constructor(
 
     private fun getEvents() = viewModelScope.launch {
         isLoading.value = true
-        println("Newsdata")
         repository.getNewsList().let { response ->
             when (response) {
                 is Response.Failure -> {
-                    println("Newsdata "+response)
                     errorLog.value = response.e?.message.toString()
                     isLoading.value = false
                 }
-
                 is Response.Loading -> {
                     isLoading.value = true
                 }
-
                 is Response.Success -> {
-                    println("Newsdata "+response)
                     newsList.addAll(response.data)
                     isLoading.value = false
                 }

@@ -132,6 +132,7 @@ class MainActivity : ComponentActivity() {
                 PlayIntegrityAppCheckProviderFactory.getInstance()
             }
         )
+        FirebaseMessaging.getInstance().subscribeToTopic("all")
         setContent {
             var currentTheme by remember { mutableStateOf(ThemePrefs(this).getTheme()) }
             val navController = rememberNavController()

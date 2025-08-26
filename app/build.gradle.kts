@@ -16,8 +16,8 @@ android {
         applicationId = "com.kal.brawlstatz3"
         minSdk = 26
         targetSdk = 36
-        versionCode = 26
-        versionName = "2.12b"
+        versionCode = 31
+        versionName = "2.21a"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -107,6 +107,9 @@ dependencies {
     implementation(libs.ktor.serialization.kotlinx.json)
     testImplementation(libs.ktor.ktor.client.mock)
     debugImplementation(libs.ktor.ktor.client.mock)
+
+    implementation(libs.app.update)
+    implementation(libs.app.update.ktx)
 
     implementation(libs.androidx.material.icons.extended)
 

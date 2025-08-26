@@ -1,14 +1,19 @@
 package com.kal.brawlstatz3.ui.components
 
+import androidx.compose.foundation.layout.Row
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.lifecycle.viewModelScope
 import com.kal.brawlstatz3.feature.brawlers.ui.BrawlersTopBar
@@ -25,18 +30,17 @@ import kotlinx.coroutines.launch
 fun AppTopBar(
     brawlersViewModel: BrawlersViewModel,
     profileViewModel: ProfileViewModel,
+    scrollBehavior: TopAppBarScrollBehavior,
     currentRoute: String,
     onDrawerClick: ()-> Unit,
     onHomePress: ()->Unit
 ) {
     TopAppBar(
         title = {
-            if (currentRoute == Screen.Brawlers::class.qualifiedName) {
-                Text("Brawlstatz", fontWeight = FontWeight.Bold)
-            }
-            else Text(currentRoute.split(".").last(), fontWeight = FontWeight.Bold)
+            Text(currentRoute.split(".").last(), fontWeight = FontWeight.Bold)
 
         },
+        scrollBehavior=scrollBehavior,
         navigationIcon = {
             if (currentRoute==Screen.Brawlers::class.qualifiedName||currentRoute==Screen.Meta::class.qualifiedName||currentRoute==Screen.Events::class.qualifiedName||currentRoute==Screen.Profile::class.qualifiedName){
                 IconButton(onClick = onDrawerClick) {
@@ -65,5 +69,6 @@ fun AppTopBar(
                 ProfileTopBar(onSettingClick =  profileViewModel::onEvent)
             }
         },
+        colors = TopAppBarDefaults.topAppBarColors().copy(scrolledContainerColor = MaterialTheme.colorScheme.surface)
     )
 }

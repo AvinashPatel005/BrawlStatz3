@@ -57,7 +57,7 @@ fun SettingScreen(
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        val themes = listOf("Dynamic","Light", "Dark", "Classic","Variant","Amoled")
+        val themes = listOf("Amoled","Auto","Light", "Dark", "Classic","Variant")
         ExpandableSettingCard(
             title = "Theme",
             description = "Choose app theme"

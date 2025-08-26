@@ -53,7 +53,7 @@ class MessageService : FirebaseMessagingService() {
             }
         }
 
-        val builder = NotificationCompat.Builder(this, "bs001")
+        val builder = NotificationCompat.Builder(this, "main_channel")
             .setSmallIcon(R.drawable.ic_notification_logo)
             .setContentTitle(title)
             .setContentText(body)
@@ -63,11 +63,7 @@ class MessageService : FirebaseMessagingService() {
 
         if (style != null) builder.setStyle(style)
 
-        val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        val channel = NotificationChannel(
-            "bs001", "App Notifications", NotificationManager.IMPORTANCE_HIGH
-        )
-        manager.createNotificationChannel(channel)
+        val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         manager.notify(System.currentTimeMillis().toInt(), builder.build())
     }
 

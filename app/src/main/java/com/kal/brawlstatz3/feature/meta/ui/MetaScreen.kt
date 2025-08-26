@@ -14,6 +14,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -53,15 +54,16 @@ fun MetaScreen(brawlersViewModel: BrawlersViewModel, modifier: Modifier = Modifi
                 Surface(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 8.dp),
+                        .padding(horizontal = 16.dp),
                     shape = RoundedCornerShape(12.dp, 12.dp, 0.dp, 0.dp),
                     color = tier.color,
                 ){
                     Card(
-                        shape = RoundedCornerShape(10.dp, 10.dp, 0.dp, 0.dp),
+                        shape = RoundedCornerShape(12.dp, 12.dp, 0.dp, 0.dp),
                         modifier = Modifier
-                            .padding(top = 2.dp, start = 2.dp, end = 2.dp)
-                            .fillMaxWidth()
+                            .padding(top = 1.dp, start = 1.dp, end = 1.dp)
+                            .fillMaxWidth(),
+                        colors = CardDefaults.cardColors().copy(containerColor = MaterialTheme.colorScheme.background)
                     ){
                         Text(text = buildAnnotatedString {
                             withStyle(style = SpanStyle(color = tier.color, fontSize = 20.sp, fontStyle = FontStyle.Italic)){
@@ -80,7 +82,7 @@ fun MetaScreen(brawlersViewModel: BrawlersViewModel, modifier: Modifier = Modifi
                 Surface (
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 8.dp),
+                        .padding(horizontal = 16.dp),
                     shape = RectangleShape,
                     color = tier.color,
                 ){
@@ -91,16 +93,18 @@ fun MetaScreen(brawlersViewModel: BrawlersViewModel, modifier: Modifier = Modifi
                 Surface(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 8.dp),
+                        .padding(horizontal = 16.dp),
                     shape = RoundedCornerShape(0.dp, 0.dp, 12.dp, 12.dp),
                     color = tier.color,
                 ) {
                     Card(
-                        shape = RoundedCornerShape(0.dp, 0.dp, 10.dp, 10.dp),
+                        shape = RoundedCornerShape(0.dp, 0.dp, 12.dp, 12.dp),
                         modifier = Modifier
                             .height(12.dp)
-                            .padding(bottom = 2.dp, start = 2.dp, end = 2.dp)
-                            .fillMaxWidth()
+                            .padding(bottom = 1.dp, start = 1.dp, end = 1.dp)
+                            .fillMaxWidth(),
+                        colors = CardDefaults.cardColors().copy(containerColor = MaterialTheme.colorScheme.background)
+
                     ){
                     }
                 }

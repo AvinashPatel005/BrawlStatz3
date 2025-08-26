@@ -17,12 +17,13 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 
 enum class AppTheme {
+    HIGH_CONTRAST,
     DYNAMIC,
     LIGHT,
     DARK,
     CLASSIC,
     VARIANT,
-    HIGH_CONTRAST
+
 }
 
 private val ClassicColorScheme = darkColorScheme(
@@ -33,24 +34,22 @@ private val ClassicColorScheme = darkColorScheme(
 
     background = Color(0xFF00052A),       // Dark navy BG (less harsh than pure #000341)
     onBackground = Color(0xFFE0E0E0),     // Light gray text
-
     surface = Color(0xFF00052A),          // Default surface (nav bar)
     onSurface = Color(0xFFE0E0E0),        // Light text/icons on surface
 
     surfaceContainer = Color(0xFF0A1550), // BottomNav background
-    surfaceContainerHighest = Color(0xFF102080), // Cards
+    surfaceContainerHighest = Color(0xFF091456), // Cards
     surfaceContainerHigh = Color(0xFF102080),    // Searchbar
     surfaceContainerLow = Color(0xFF00052A),     // Low-level surfaces
 
-    surfaceVariant = Color(0xFF1E3A8A),   // Slightly lighter variant (blue-500ish)
+    surfaceVariant = Color(0xFF070F5E),   // Slightly lighter variant (blue-500ish)
     onSurfaceVariant = Color(0xFFB0BEC5), // Text/icons on variant
 
-    secondaryContainer = Color(0xFF00ACC1),       // Softer cyan
-    onSecondaryContainer = Color(0xFF00111F),     // Dark text for readability
+    surfaceBright = Color(0xFF1E3986)
 )
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Color(0xFF00BCD4),
+    primary = Color(0xFFF5E03E),
     onPrimary = Color.Black,
     inversePrimary = Color(0xFF1A237E)
 )
@@ -72,35 +71,34 @@ private val ClassicVariantColorScheme = darkColorScheme(
     surfaceContainerHigh = Color(0xFF222C4D),    // Searchbar
     surfaceContainerLow = Color(0xFF0B1221),     // Base layer
 
-    surfaceVariant = Color(0xFF2F3F70),   // Muted blue variant
+    surfaceVariant = Color(0xFF14213D),   // Muted blue variant
     onSurfaceVariant = Color(0xFFB0BEC5), // Muted gray text/icons
 
-    secondaryContainer = Color(0xFF00ACC1), // Softer cyan accent
-    onSecondaryContainer = Color(0xFF00111F)
+    surfaceBright = Color(0xFF1D315B)
 
 )
 private val DarkColorSchemeHighContrast = darkColorScheme(
-    primary = Color(0xFF00BCD4),          // Cyan accent
+    primary = Color(0xFFF5E03E),          // Cyan accent
     onPrimary = Color.Black,              // Text/icons on cyan
 
-    inversePrimary = Color(0xFF1A237E),   // Deep indigo for contrast
+    inversePrimary = Color(0xFFF44336),   // Deep indigo for contrast
 
     background = Color(0xFF000000),       // Pure AMOLED black
-    onBackground = Color(0xFFE0E0E0),     // Light gray text
+    onBackground = Color(0xFFD0D0D0),     // Light gray text
 
     surface = Color(0xFF000000),          // Same as background (nav bar)
     onSurface = Color(0xFFE0E0E0),        // Light text/icons
 
+
     surfaceContainer = Color(0xFF0A0A0A), // Subtle dark gray (BottomNav)
-    surfaceContainerHighest = Color(0xFF171717), // Cards
+    surfaceContainerHighest = Color(0xFA131313), // Cards Default
     surfaceContainerHigh = Color(0xFF101010),    // Searchbar
     surfaceContainerLow = Color(0xFF000000),     // Base layer (matches background)
 
-    surfaceVariant = Color(0xFF1E3A8A),   // Indigo/blue accent variant
+    surfaceVariant = Color(0xFA131313),   // Indigo/blue accent variant
     onSurfaceVariant = Color(0xFFB0BEC5), // Muted gray text/icons
 
-    secondaryContainer = Color(0xFF00ACC1), // Softer cyan
-    onSecondaryContainer = Color(0xFF00111F)
+    surfaceBright = Color(0xFF1E1E1E)
 
 )
 private val LightColorScheme = lightColorScheme(
@@ -120,11 +118,10 @@ private val LightColorScheme = lightColorScheme(
     surfaceContainerHigh = Color(0xFFE6DFF3),    // Searchbar
     surfaceContainerLow = Color(0xFFF8F5FC),     // Base layer
 
-    surfaceVariant = Color(0xFFD1C4E9),   // Muted lavender variant
+    surfaceVariant = Color(0xFFE2DCFC),   // Muted lavender variant
     onSurfaceVariant = Color(0xFF4A4458), // Muted dark text/icons
 
-    secondaryContainer = Color(0xFFE1BEE7), // Soft pastel purple
-    onSecondaryContainer = Color(0xFF2E003E)
+    surfaceBright  = Color(0xFFD5C0FA)
 )
 @Composable
 fun BrawlStatZTheme(

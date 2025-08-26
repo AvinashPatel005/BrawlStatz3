@@ -1,12 +1,20 @@
 package com.kal.brawlstatz3
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -32,7 +40,9 @@ import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -43,6 +53,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -83,11 +94,20 @@ import com.kal.brawlstatz3.util.rightBorder
 import com.kal.brawlstatz3.util.switchIcon
 import kotlinx.coroutines.launch
 import androidx.core.net.toUri
+import com.google.android.play.core.appupdate.AppUpdateManager
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory
+import com.google.android.play.core.install.model.AppUpdateType
+import com.google.android.play.core.install.model.UpdateAvailability
+import com.google.android.play.core.ktx.isFlexibleUpdateAllowed
+import com.google.android.play.core.ktx.isImmediateUpdateAllowed
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private val navEvents = MutableSharedFlow<Screen>(extraBufferCapacity = 1, replay = 1)
+    private lateinit var appUpdateManager: AppUpdateManager
+    private val updateType = AppUpdateType.IMMEDIATE
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
@@ -122,6 +142,29 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
+
+        appUpdateManager = AppUpdateManagerFactory.create(applicationContext)
+        checkForUpdate()
+
+        val importance = NotificationManager.IMPORTANCE_HIGH
+        val mChannel = NotificationChannel("main_channel", "General", importance)
+        mChannel.enableVibration(true)
+        val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannel(mChannel)
+
+        FirebaseMessaging.getInstance().subscribeToTopic("all")
+
+        FirebaseMessaging.getInstance().token
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val token = task.result
+                    Log.d("FCM", "Device token: $token")
+                    // You can send this token to your server
+                } else {
+                    Log.e("FCM", "Fetching FCM token failed", task.exception)
+                }
+            }
+
         if(isFromNotification(intent)) handleNotificationIntent(intent)
         enableEdgeToEdge()
         Firebase.initialize(context = this)
@@ -132,7 +175,7 @@ class MainActivity : ComponentActivity() {
                 PlayIntegrityAppCheckProviderFactory.getInstance()
             }
         )
-        FirebaseMessaging.getInstance().subscribeToTopic("all")
+
         setContent {
             var currentTheme by remember { mutableStateOf(ThemePrefs(this).getTheme()) }
             val navController = rememberNavController()
@@ -156,12 +199,14 @@ class MainActivity : ComponentActivity() {
 
                 val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
                 val scope = rememberCoroutineScope()
+                val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
+
                 ModalNavigationDrawer(
                     drawerContent = {
                         ModalDrawerSheet(
                             drawerShape = RectangleShape,
                             modifier = Modifier.shadow(10.dp).rightBorder(MaterialTheme.colorScheme.primary,8f),
-                            drawerTonalElevation = 2.dp
+                            drawerTonalElevation = 1.dp
                         ) {
 
 
@@ -183,6 +228,17 @@ class MainActivity : ComponentActivity() {
                                         onClick = {
                                             scope.launch {
                                                 drawerState.close()
+                                                delay(100)
+                                                val animatable = Animatable(scrollBehavior.state.heightOffset)
+                                                animatable.animateTo(
+                                                    targetValue = 0f,
+                                                    animationSpec = tween(
+                                                        durationMillis = 300,
+                                                        easing = FastOutSlowInEasing
+                                                    )
+                                                ) {
+                                                    scrollBehavior.state.heightOffset = value
+                                                }
                                             }
                                             navController.navigate(Screen.News)
                                         }
@@ -200,6 +256,17 @@ class MainActivity : ComponentActivity() {
                                         onClick = {
                                             scope.launch {
                                                 drawerState.close()
+                                                delay(100)
+                                                val animatable = Animatable(scrollBehavior.state.heightOffset)
+                                                animatable.animateTo(
+                                                    targetValue = 0f,
+                                                    animationSpec = tween(
+                                                        durationMillis = 300,
+                                                        easing = FastOutSlowInEasing
+                                                    )
+                                                ) {
+                                                    scrollBehavior.state.heightOffset = value
+                                                }
                                             }
                                             navController.navigate(Screen.Settings)
                                         }
@@ -235,10 +302,22 @@ class MainActivity : ComponentActivity() {
                                         onClick = {
                                             scope.launch {
                                                 drawerState.close()
+                                                delay(100)
+                                                val animatable = Animatable(scrollBehavior.state.heightOffset)
+                                                animatable.animateTo(
+                                                    targetValue = 0f,
+                                                    animationSpec = tween(
+                                                        durationMillis = 300,
+                                                        easing = FastOutSlowInEasing
+                                                    )
+                                                ) {
+                                                    scrollBehavior.state.heightOffset = value
+                                                }
                                             }
                                             navController.navigate(Screen.About){
                                                 launchSingleTop = true
                                             }
+
                                         }
                                     )
                                 }
@@ -257,6 +336,7 @@ class MainActivity : ComponentActivity() {
                                 brawlersViewModel = brawlerViewModel,
                                 profileViewModel = profileViewModel,
                                 currentRoute = currentRoute,
+                                scrollBehavior=scrollBehavior,
                                 onDrawerClick = {
                                     scope.launch {
                                         if (drawerState.isClosed) {
@@ -284,11 +364,24 @@ class MainActivity : ComponentActivity() {
                                                 launchSingleTop = true
                                                 popUpTo(Screen.Brawlers::class.qualifiedName.orEmpty())
                                             }
+                                            scope.launch {
+                                                delay(500)
+                                                val animatable = Animatable(scrollBehavior.state.heightOffset)
+                                                animatable.animateTo(
+                                                    targetValue = 0f,
+                                                    animationSpec = tween(
+                                                        durationMillis = 300,
+                                                        easing = FastOutSlowInEasing
+                                                    )
+                                                ) {
+                                                    scrollBehavior.state.heightOffset = value
+                                                }
+                                            }
                                         }
                                     })
                             }
                         },
-                        modifier = Modifier
+                        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)
                             .fillMaxSize()
 
                     ) { innerPadding ->
@@ -337,6 +430,35 @@ class MainActivity : ComponentActivity() {
                     }
                 }
 
+            }
+        }
+    }
+
+    private fun checkForUpdate(){
+        appUpdateManager.appUpdateInfo.addOnSuccessListener { info->
+            val isUpdateAvailable = info.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
+            val isUpdateAllowed = when(updateType){
+                AppUpdateType.FLEXIBLE -> info.isFlexibleUpdateAllowed
+                AppUpdateType.IMMEDIATE -> info.isImmediateUpdateAllowed
+                else -> false
+            }
+
+            if(isUpdateAvailable && isUpdateAllowed){
+                appUpdateManager.startUpdateFlowForResult(
+                    info,
+                    updateType,
+                    this,
+                    11012
+                )
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode==11012){
+            if(resultCode!=RESULT_OK){
+                println("Something Went Wrong updating!")
             }
         }
     }

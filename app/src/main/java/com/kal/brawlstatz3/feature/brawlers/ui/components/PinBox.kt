@@ -26,8 +26,8 @@ fun PinBox(pinURL: String, backgroundColor: Color, modifier: Modifier = Modifier
             .padding(horizontal = 1.dp)
             .clip(RoundedCornerShape(50))
             .background(backgroundColor)
-            .padding(horizontal = 6.dp, vertical = 1.dp)
-            .size(26.dp), contentAlignment = Alignment.Center
+            .padding(horizontal = 4.dp, vertical = 1.dp)
+            .size(22.dp), contentAlignment = Alignment.Center
     ) {
         GlideImage(
             model = pinURL,

@@ -177,7 +177,7 @@ fun ProfileScreen(
         PullToRefreshBox(onRefresh = {
             profileViewModel.onEvent(ProfileUiEvent.Refresh)
         }, isRefreshing = profileViewModel.isLoading.value) {
-            LazyColumn(modifier = Modifier.padding(horizontal = 8.dp)) {
+            LazyColumn(modifier = Modifier.padding(horizontal = 16.dp)) {
 
                 item {
                     Card(
@@ -217,7 +217,8 @@ fun ProfileScreen(
                                     Text(
                                         text = profile.name,
                                         fontSize = 24.sp,
-                                        fontWeight = FontWeight.Bold
+                                        fontWeight = FontWeight.Bold,
+                                        color = MaterialTheme.colorScheme.onBackground
                                     )
                                     Row(verticalAlignment = Alignment.CenterVertically) {
                                         GlideImage(

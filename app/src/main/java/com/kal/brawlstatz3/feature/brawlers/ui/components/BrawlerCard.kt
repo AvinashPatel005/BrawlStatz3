@@ -70,7 +70,6 @@ fun BrawlerCard(
     var componentWidth by remember { mutableStateOf(0.dp) }
     val density = LocalDensity.current
     Card(
-        border = BorderStroke(1.dp, getRarityColor(brawler.rarity)),
         modifier = modifier
             .fillMaxWidth()
             .padding(8.dp, 2.dp)
@@ -85,6 +84,7 @@ fun BrawlerCard(
                 interactionSource = remember { MutableInteractionSource() },
                 onClick = { onClick(BrawlerUiEvent.CardClicked(brawler.id)) })
             .animateContentSize(),
+        colors = CardDefaults.cardColors().copy(containerColor = if(isExpanded) MaterialTheme.colorScheme.surfaceVariant else MaterialTheme.colorScheme.background)
     ) {
 
         Row(
@@ -128,16 +128,15 @@ fun BrawlerCard(
                         isExpanded = isExpanded
                     )
                 }
-
             }
             if (brawler.counters[0] != 0) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(text = "COUNTERS", fontSize = 12.sp)
-                    Row {
+                Column(horizontalAlignment = Alignment.CenterHorizontally ) {
+                    Text(text = "️COUNTERS", fontSize = 12.sp)
+                    Row(modifier= Modifier.clip(RoundedCornerShape(16.dp)).background(color=if(isExpanded) MaterialTheme.colorScheme.surfaceBright else MaterialTheme.colorScheme.surfaceVariant ).padding(vertical = 4.dp, horizontal = 4.dp)) {
                         brawler.counters.forEach { pin ->
                             PinBox(
                                 pinURL = FirebaseStorageUtil().getNeutralPin(pin),
-                                backgroundColor = Color.White
+                                backgroundColor = Color.Transparent
                             )
                         }
                     }

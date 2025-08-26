@@ -54,7 +54,7 @@ fun MoveDescription(
                             bottomEnd = 4.dp
                         )
                     )
-                    .background(MaterialTheme.colorScheme.surfaceVariant)
+                    .background(color = MaterialTheme.colorScheme.surfaceBright)
                     .clickable {
                         onClick()
                     }

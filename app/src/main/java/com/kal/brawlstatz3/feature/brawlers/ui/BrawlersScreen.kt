@@ -30,6 +30,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -62,18 +63,20 @@ fun BrawlersScreen(brawlersViewModel: BrawlersViewModel,modifier: Modifier = Mod
                             .background(MaterialTheme.colorScheme.background)
                             .height(35.dp)
                     ) {
+                        item { Spacer(modifier = Modifier.width(8.dp)) }
                         itemsIndexed(brawlersViewModel.filterList) {index,filter  ->
-                            Spacer(modifier = Modifier.width(8.dp))
+                            Spacer(modifier = Modifier.width(10.dp))
                             Button(
                                 modifier =
-                                    Modifier.height(30.dp),
+                                    Modifier.border(1.dp,MaterialTheme.colorScheme.primary,
+                                        RoundedCornerShape(12.dp)).clip(RoundedCornerShape(12.dp)).height(30.dp),
                                 onClick = {
                                     brawlersViewModel.onEvent(BrawlerUiEvent.FilterToggled(index))
                                 },
                                 colors = if (index == brawlersViewModel.filter.intValue) ButtonDefaults.buttonColors(
-                                    MaterialTheme.colorScheme.inversePrimary
-                                ) else ButtonDefaults.buttonColors(
                                     MaterialTheme.colorScheme.primary
+                                ) else ButtonDefaults.buttonColors(
+                                    MaterialTheme.colorScheme.surfaceVariant
                                 ),
                                 shape = RoundedCornerShape(8.dp),
                                 contentPadding = PaddingValues(horizontal = 8.dp, vertical = 0.dp)
@@ -81,8 +84,8 @@ fun BrawlersScreen(brawlersViewModel: BrawlersViewModel,modifier: Modifier = Mod
                                 Text(
                                     text = filter,
                                     fontSize = 14.sp,
-                                    color = if (index == brawlersViewModel.filter.intValue) MaterialTheme.colorScheme.onPrimaryContainer
-                                    else MaterialTheme.colorScheme.onPrimary,
+                                    color = if (index == brawlersViewModel.filter.intValue) MaterialTheme.colorScheme.onPrimary
+                                    else MaterialTheme.colorScheme.onSurface,
                                     fontWeight = FontWeight.Bold
                                 )
                             }

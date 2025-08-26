@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RichTooltip
@@ -59,8 +60,9 @@ fun MetaCard(brawler: Brawler,rank:Int,isPromoted:Boolean,showRank:Boolean,modif
     Card(
         shape = RectangleShape,
         modifier = Modifier
-            .padding(horizontal = 2.dp)
-            .fillMaxWidth()
+            .padding(horizontal = 1.dp)
+            .fillMaxWidth(),
+        colors = CardDefaults.cardColors().copy(containerColor = MaterialTheme.colorScheme.background)
     ){
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween,modifier = Modifier
             .fillMaxWidth()
@@ -88,6 +90,7 @@ fun MetaCard(brawler: Brawler,rank:Int,isPromoted:Boolean,showRank:Boolean,modif
                     Text(
                         text = brawler.name,
                         fontSize = 20.sp,
+                        color = MaterialTheme.colorScheme.onBackground,
                         fontWeight = FontWeight.Bold)
 
                     Row(verticalAlignment = Alignment.CenterVertically){
@@ -104,7 +107,7 @@ fun MetaCard(brawler: Brawler,rank:Int,isPromoted:Boolean,showRank:Boolean,modif
                                 text = { Text(text = brawler.starpowers[brawler.bestBuild.starpower].description) },
                                 modifier = Modifier.fillMaxWidth(0.5f),
                                 shape = RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp, bottomEnd = 10.dp, bottomStart = 0.dp),
-                                shadowElevation = 2.dp
+                                colors = TooltipDefaults.richTooltipColors().copy(containerColor = MaterialTheme.colorScheme.surfaceVariant)
                                 )
                         }, state = starpowerToolTip) {
                             Box(contentAlignment = Alignment.Center){

@@ -14,7 +14,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
@@ -51,10 +53,11 @@ fun SettingScreen(
     onIconChange: (String) -> Unit = {},
     onClearData: () -> Unit = {}
 ) {
+    val scrollState = rememberScrollState()
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(16.dp).verticalScroll(scrollState),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         val themes = listOf("Amoled","Auto","Light", "Dark", "Classic","Variant")
@@ -97,7 +100,7 @@ fun SettingScreen(
                 }
             }
         }
-            SettingCard(title = "Clear Data", description = "Remove all stored app data") {
+        SettingCard(title = "Clear Data", description = "Remove all stored app data") {
             Button(
                 onClick = { onClearData() },
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFF56262))

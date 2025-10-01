@@ -89,7 +89,7 @@ fun ProfileScreen(
     val profile = profileViewModel.profile.value
     val club = profileViewModel.club.value
     val screenWidth = LocalConfiguration.current.screenWidthDp.dp
-    val itemWidth = screenWidth / 2 - 8.dp
+    val itemWidth = screenWidth / 2 - 16.dp
     val favorite = brawlerList.find { brawler -> brawler.name == profile.favourite }
     val sortBy = listOf(
         "Name",

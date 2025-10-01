@@ -16,8 +16,8 @@ android {
         applicationId = "com.kal.brawlstatz3"
         minSdk = 26
         targetSdk = 36
-        versionCode = 31
-        versionName = "2.21a"
+        versionCode = 35
+        versionName = "2.31"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {

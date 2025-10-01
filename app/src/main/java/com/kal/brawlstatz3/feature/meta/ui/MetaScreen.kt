@@ -1,6 +1,7 @@
 package com.kal.brawlstatz3.feature.meta.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -27,6 +29,7 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -49,66 +52,34 @@ fun MetaScreen(brawlersViewModel: BrawlersViewModel, modifier: Modifier = Modifi
         }
     }
     LazyColumn {
+
         for (tier in brawlersViewModel.metaList){
-            item {
-                Surface(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp),
-                    shape = RoundedCornerShape(12.dp, 12.dp, 0.dp, 0.dp),
-                    color = tier.color,
-                ){
-                    Card(
-                        shape = RoundedCornerShape(12.dp, 12.dp, 0.dp, 0.dp),
-                        modifier = Modifier
-                            .padding(top = 1.dp, start = 1.dp, end = 1.dp)
-                            .fillMaxWidth(),
-                        colors = CardDefaults.cardColors().copy(containerColor = MaterialTheme.colorScheme.background)
-                    ){
-                        Text(text = buildAnnotatedString {
-                            withStyle(style = SpanStyle(color = tier.color, fontSize = 20.sp, fontStyle = FontStyle.Italic)){
-                                append(tier.name)
-                            }
-                            if (tier.name!="NEW"){
-                                withStyle(style = SpanStyle( fontSize = 8.sp, fontStyle = FontStyle.Italic)){
-                                    append("TIER")
-                                }
-                            }
-                        }, modifier = Modifier.padding(horizontal = 4.dp))
-                    }
+            stickyHeader {
+                Row(modifier= Modifier.background(MaterialTheme.colorScheme.surface).padding(horizontal = 16.dp).fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                    Text("Tier", fontWeight = FontWeight.Bold, fontSize = 18.sp)
+                    Text(text = buildAnnotatedString {
+                        withStyle(style = SpanStyle(color = tier.color, fontSize = 24.sp, fontStyle = FontStyle.Italic)){
+                            append(tier.name)
+                        }
+//                        if (tier.name!="NEW"){
+//                            withStyle(style = SpanStyle( fontSize = 12.sp, fontStyle = FontStyle.Italic)){
+//                                append("TIER")
+//                            }
+//                        }
+                    }, modifier = Modifier.padding(horizontal = 4.dp))
                 }
             }
             items(tier.brawlers, key = {it.id}){brawler->
                 Surface (
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 16.dp),
-                    shape = RectangleShape,
-                    color = tier.color,
+                        .padding(horizontal = 8.dp),
                 ){
                     MetaCard(brawler = brawler, rank = brawlersViewModel.sortedMetaList.indexOf(brawler)+1, isPromoted = if(brawler.tier.size>1) brawler.tier[0][0]<brawler.tier[1][0] else false,showRank = tier.name!="NEW")
                 }
             }
-            item {
-                Surface(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp),
-                    shape = RoundedCornerShape(0.dp, 0.dp, 12.dp, 12.dp),
-                    color = tier.color,
-                ) {
-                    Card(
-                        shape = RoundedCornerShape(0.dp, 0.dp, 12.dp, 12.dp),
-                        modifier = Modifier
-                            .height(12.dp)
-                            .padding(bottom = 1.dp, start = 1.dp, end = 1.dp)
-                            .fillMaxWidth(),
-                        colors = CardDefaults.cardColors().copy(containerColor = MaterialTheme.colorScheme.background)
-
-                    ){
-                    }
-                }
-                Spacer(modifier = Modifier.height(4.dp))
+            item{
+                Spacer(modifier= Modifier.padding(vertical = 10.dp))
             }
         }
     }

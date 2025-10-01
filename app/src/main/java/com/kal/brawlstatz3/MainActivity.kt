@@ -200,7 +200,21 @@ class MainActivity : ComponentActivity() {
                 val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
                 val scope = rememberCoroutineScope()
                 val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
-
+                LaunchedEffect(currentRoute) {
+                    scope.launch {
+                        delay(500)
+                        val animatable = Animatable(scrollBehavior.state.heightOffset)
+                        animatable.animateTo(
+                            targetValue = 0f,
+                            animationSpec = tween(
+                                durationMillis = 300,
+                                easing = FastOutSlowInEasing
+                            )
+                        ) {
+                            scrollBehavior.state.heightOffset = value
+                        }
+                    }
+                }
                 ModalNavigationDrawer(
                     drawerContent = {
                         ModalDrawerSheet(
@@ -228,17 +242,6 @@ class MainActivity : ComponentActivity() {
                                         onClick = {
                                             scope.launch {
                                                 drawerState.close()
-                                                delay(100)
-                                                val animatable = Animatable(scrollBehavior.state.heightOffset)
-                                                animatable.animateTo(
-                                                    targetValue = 0f,
-                                                    animationSpec = tween(
-                                                        durationMillis = 300,
-                                                        easing = FastOutSlowInEasing
-                                                    )
-                                                ) {
-                                                    scrollBehavior.state.heightOffset = value
-                                                }
                                             }
                                             navController.navigate(Screen.News)
                                         }
@@ -257,16 +260,6 @@ class MainActivity : ComponentActivity() {
                                             scope.launch {
                                                 drawerState.close()
                                                 delay(100)
-                                                val animatable = Animatable(scrollBehavior.state.heightOffset)
-                                                animatable.animateTo(
-                                                    targetValue = 0f,
-                                                    animationSpec = tween(
-                                                        durationMillis = 300,
-                                                        easing = FastOutSlowInEasing
-                                                    )
-                                                ) {
-                                                    scrollBehavior.state.heightOffset = value
-                                                }
                                             }
                                             navController.navigate(Screen.Settings)
                                         }
@@ -363,19 +356,6 @@ class MainActivity : ComponentActivity() {
                                             navController.navigate(route) {
                                                 launchSingleTop = true
                                                 popUpTo(Screen.Brawlers::class.qualifiedName.orEmpty())
-                                            }
-                                            scope.launch {
-                                                delay(500)
-                                                val animatable = Animatable(scrollBehavior.state.heightOffset)
-                                                animatable.animateTo(
-                                                    targetValue = 0f,
-                                                    animationSpec = tween(
-                                                        durationMillis = 300,
-                                                        easing = FastOutSlowInEasing
-                                                    )
-                                                ) {
-                                                    scrollBehavior.state.heightOffset = value
-                                                }
                                             }
                                         }
                                     })

@@ -82,8 +82,12 @@ class ProfileViewModel @Inject constructor(
                 is Response.Success -> {
                     profile.value = response.data
                     brawlers.addAll(response.data.brawlersData)
-                    getClub(profile.value.club.tag)
-
+                    if(profile.value.club.tag!="-1"){
+                        getClub(profile.value.club.tag)
+                    }
+                    else{
+                        isLoading.value = false
+                    }
                 }
             }
         }
